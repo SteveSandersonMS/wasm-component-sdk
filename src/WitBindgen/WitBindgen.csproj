@@ -4,18 +4,18 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<BuildWitBindgenLocally>true</BuildWitBindgenLocally>
+
+		<PrebuiltWitBindgenVersion>0.13.1</PrebuiltWitBindgenVersion>
+		<PrebuiltWitBindgenBaseUrl>https://github.com/bytecodealliance/wit-bindgen/releases/download/wit-bindgen-cli-$(PrebuiltWitBindgenVersion)/wit-bindgen-v$(PrebuiltWitBindgenVersion)</PrebuiltWitBindgenBaseUrl>
+
+		<BuildWitBindgenLocally>false</BuildWitBindgenLocally>
 		<WitBindgenModuleRoot>$(MSBuildThisFileDirectory)..\..\modules\wit-bindgen\</WitBindgenModuleRoot>
 
 		<WitBindgenTarget Condition="$([MSBuild]::IsOSPlatform('Windows'))">win</WitBindgenTarget>
 		<WitBindgenTarget Condition="$([MSBuild]::IsOSPlatform('Linux'))">linux	</WitBindgenTarget>
-		<WitBindgenTarget Condition="$([MSBuild]::IsOSPlatform('OSX'))">mac</WitBindgenTarget>
+		<WitBindgenTarget Condition="$([MSBuild]::IsOSPlatform('OSX'))">osx</WitBindgenTarget>
 		<WitBindgenTarget>$(WitBindgenTarget)-$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture.ToString().ToLower())</WitBindgenTarget>
 	</PropertyGroup>
-
-	<ItemGroup>
-	  <Folder Include="tools\" />
-	</ItemGroup>
 
 	<Target Name="BuildOrDownloadNativeTooling" BeforeTargets="BeforeBuild" DependsOnTargets="BuildNativeTooling; DownloadNativeTooling">
 	</Target>
@@ -31,8 +31,30 @@
 		<Copy SourceFiles="$(WitBindgenModuleRoot)target\release\$(WitBindgenExeName)" DestinationFolder="tools\$(WitBindgenTarget)\" />
 	</Target>
 
-	<Target Name="DownloadNativeTooling" Condition="'$(BuildWitBindgenLocally)' != 'true'">
+	<Target Name="DownloadNativeTooling"
+			DependsOnTargets="GetDownloadNativeToolingDependencies; DownloadNativeToolingCore"
+			Condition="'$(BuildWitBindgenLocally)' != 'true'">		
+	</Target>
 
+	<Target Name="GetDownloadNativeToolingDependencies">
+		<ItemGroup>
+			<PrebuiltWitBindgenTarget Include="aarch64-linux" Rid="linux-arm64" Ext=".tar.gz" />
+			<PrebuiltWitBindgenTarget Include="aarch64-macos" Rid="osx-arm64" Ext=".tar.gz" />
+			<PrebuiltWitBindgenTarget Include="x86_64-linux" Rid="linux-x64" Ext=".tar.gz" />
+			<PrebuiltWitBindgenTarget Include="x86_64-macos" Rid="osx-x64" Ext=".tar.gz" />
+			<PrebuiltWitBindgenTarget Include="x86_64-windows" Rid="win-x64" Ext=".zip" ExeExt=".exe" />
+		</ItemGroup>
+		<ItemGroup>
+			<PrebuiltWitBindgenOutputs Include="tools\%(PrebuiltWitBindgenTarget.Rid)\wit-bindgen%(PrebuiltWitBindgenTarget.ExeExt)" />
+		</ItemGroup>
+	</Target>
+
+	<Target Name="DownloadNativeToolingCore" Inputs="@(PrebuiltWitBindgenOutputs)" Outputs="@(PrebuiltWitBindgenOutputs)">
+		<Message Importance="high" Text="Outputs: @(PrebuiltWitBindgenOutputs)" />
+		<DownloadFile SourceUrl="$(PrebuiltWitBindgenBaseUrl)-%(PrebuiltWitBindgenTarget.Identity)%(PrebuiltWitBindgenTarget.Ext)" DestinationFolder="tools\temp" DestinationFileName="%(PrebuiltWitBindgenTarget.Rid)%(PrebuiltWitBindgenTarget.Ext)" />
+		<MakeDir Directories="tools\%(PrebuiltWitBindgenTarget.Rid)" />
+		<Exec Command="tar -xf &quot;temp/%(PrebuiltWitBindgenTarget.Rid)%(PrebuiltWitBindgenTarget.Ext)&quot; -C %(PrebuiltWitBindgenTarget.Rid) --strip-components=1" WorkingDirectory="tools" />
+		<RemoveDir Directories="tools\temp" />
 	</Target>
 
 </Project>
