@@ -1,0 +1,19 @@
+﻿<Project>
+	<ItemDefinitionGroup>
+		<Wit>
+			<!-- On save, trigger a design-time build -->
+			<Generator>MSBuild:Compile</Generator>
+		</Wit>
+	</ItemDefinitionGroup>
+
+	<ItemGroup Condition="'$(Language)' == 'C#'">
+		<PropertyPageSchema Include="$(MSBuildThisFileDirectory)Wit.CSharp.xml">
+			<Context>File;BrowseObject</Context>
+		</PropertyPageSchema>
+
+		<Wit Include="**\*.wit" />
+
+		<!-- Treats this itemgroup as a compilation input (e.g., changes affect VS fast up-to-date check, and generator is shown in properties pane) -->
+		<AvailableItemName Include="Wit" />
+	</ItemGroup>
+</Project>

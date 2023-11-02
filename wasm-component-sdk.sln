@@ -5,17 +5,20 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F40ED49E-72A3-410D-AFBC-94FE31614C1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WasmComponent.Sdk", "src\WasmComponent.Sdk\WasmComponent.Sdk.csproj", "{FB68D5A1-89AA-47AB-B397-F93FF529995C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmComponent.Sdk", "src\WasmComponent.Sdk\WasmComponent.Sdk.csproj", "{FB68D5A1-89AA-47AB-B397-F93FF529995C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WitBindgen", "src\WitBindgen\WitBindgen.csproj", "{7D4CD1D4-4DD2-418F-9E46-FF4140293B63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WitBindgen", "src\WitBindgen\WitBindgen.csproj", "{7D4CD1D4-4DD2-418F-9E46-FF4140293B63}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{AA757883-5539-467E-97EA-6FE67D09A697}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "calculator", "calculator", "{8A0A8F87-CEEB-447E-A694-36BEA1659CA5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adder", "samples\calculator\Adder\Adder.csproj", "{5A906283-BA3B-4335-A5FA-0DFDEB771D84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FB68D5A1-89AA-47AB-B397-F93FF529995C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -26,9 +29,21 @@ Global
 		{7D4CD1D4-4DD2-418F-9E46-FF4140293B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D4CD1D4-4DD2-418F-9E46-FF4140293B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D4CD1D4-4DD2-418F-9E46-FF4140293B63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A906283-BA3B-4335-A5FA-0DFDEB771D84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A906283-BA3B-4335-A5FA-0DFDEB771D84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A906283-BA3B-4335-A5FA-0DFDEB771D84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A906283-BA3B-4335-A5FA-0DFDEB771D84}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FB68D5A1-89AA-47AB-B397-F93FF529995C} = {F40ED49E-72A3-410D-AFBC-94FE31614C1A}
 		{7D4CD1D4-4DD2-418F-9E46-FF4140293B63} = {F40ED49E-72A3-410D-AFBC-94FE31614C1A}
+		{8A0A8F87-CEEB-447E-A694-36BEA1659CA5} = {AA757883-5539-467E-97EA-6FE67D09A697}
+		{5A906283-BA3B-4335-A5FA-0DFDEB771D84} = {8A0A8F87-CEEB-447E-A694-36BEA1659CA5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1F033B40-BF0A-4D81-B1D6-84080B73D385}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,25 @@
+﻿<Project>
+	<Target Name="WitCompile_BeforeCsCompile" BeforeTargets="BeforeCompile" Condition="'$(Language)' == 'C#'">
+		<PropertyGroup>
+			<WitGeneratedFilesRoot Condition="'$(WitGeneratedFilesRoot)' == ''">$(IntermediateOutputPath)wit_generated\</WitGeneratedFilesRoot>
+		</PropertyGroup>
+
+		<ItemGroup>
+			<Wit Update="@(Wit)">
+				<OutputPath>$(WitGeneratedFilesRoot)%(Wit.Filename).cs</OutputPath>
+			</Wit>
+		</ItemGroup>
+
+		<Copy SourceFiles="@(Wit)" DestinationFiles="@(Wit->'%(OutputPath)')" />
+
+		<!-- Delete redundant files -->
+		<ItemGroup>
+			<_RedundantWitOutput Include="$(WitGeneratedFilesRoot)**\*.cs" Exclude="@(Wit->'%(OutputPath)')" />
+		</ItemGroup>
+		<Delete Files="@(_RedundantWitOutput)" />
+
+		<ItemGroup>
+			<Compile Include="$(WitGeneratedFilesRoot)**\*.cs" />
+		</ItemGroup>
+	</Target>
+</Project>
