@@ -5,12 +5,13 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
+		<!-- Things you might want to edit -->
+		<!-- Set BuildWitBindgenLocally to true if you want to build modules/wit-bindgen locally and use its output -->
+		<BuildWitBindgenLocally>false</BuildWitBindgenLocally>
 		<PrebuiltWitBindgenVersion>0.13.1</PrebuiltWitBindgenVersion>
 		<PrebuiltWitBindgenBaseUrl>https://github.com/bytecodealliance/wit-bindgen/releases/download/wit-bindgen-cli-$(PrebuiltWitBindgenVersion)/wit-bindgen-v$(PrebuiltWitBindgenVersion)</PrebuiltWitBindgenBaseUrl>
 
-		<BuildWitBindgenLocally>false</BuildWitBindgenLocally>
 		<WitBindgenModuleRoot>$(MSBuildThisFileDirectory)..\..\modules\wit-bindgen\</WitBindgenModuleRoot>
-
 		<WitBindgenTarget Condition="$([MSBuild]::IsOSPlatform('Windows'))">win</WitBindgenTarget>
 		<WitBindgenTarget Condition="$([MSBuild]::IsOSPlatform('Linux'))">linux	</WitBindgenTarget>
 		<WitBindgenTarget Condition="$([MSBuild]::IsOSPlatform('OSX'))">osx</WitBindgenTarget>
@@ -50,7 +51,6 @@
 	</Target>
 
 	<Target Name="DownloadNativeToolingCore" Inputs="@(PrebuiltWitBindgenOutputs)" Outputs="@(PrebuiltWitBindgenOutputs)">
-		<Message Importance="high" Text="Outputs: @(PrebuiltWitBindgenOutputs)" />
 		<DownloadFile SourceUrl="$(PrebuiltWitBindgenBaseUrl)-%(PrebuiltWitBindgenTarget.Identity)%(PrebuiltWitBindgenTarget.Ext)" DestinationFolder="tools\temp" DestinationFileName="%(PrebuiltWitBindgenTarget.Rid)%(PrebuiltWitBindgenTarget.Ext)" />
 		<MakeDir Directories="tools\%(PrebuiltWitBindgenTarget.Rid)" />
 		<Exec Command="tar -xf &quot;temp/%(PrebuiltWitBindgenTarget.Rid)%(PrebuiltWitBindgenTarget.Ext)&quot; -C %(PrebuiltWitBindgenTarget.Rid) --strip-components=1" WorkingDirectory="tools" />
