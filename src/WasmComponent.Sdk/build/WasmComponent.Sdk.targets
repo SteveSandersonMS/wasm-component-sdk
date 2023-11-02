@@ -24,6 +24,10 @@
 		</CopyWasmToOutputDependsOn>
 	</PropertyGroup>
 
+	<Target Name="EmitWasmOnBuild" AfterTargets="Build" DependsOnTargets="LinkNativeLlvm">
+		<Message Importance="high" Text="$(ProjectName) -> $([System.IO.Path]::GetFullPath('$(NativeBinary)'))" />
+	</Target>
+
 	<Target Name="PrepareWasmSdks" BeforeTargets="CheckWasmSdks" DependsOnTargets="ObtainWasiSdk; ObtainEmscripten">
 		<PropertyGroup>
 			<EmSdk>$(EmscriptenRoot)</EmSdk>

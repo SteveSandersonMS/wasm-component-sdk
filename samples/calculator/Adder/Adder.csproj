@@ -20,8 +20,5 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\src\WasmComponent.Sdk\WasmComponent.Sdk.csproj" />
 	</ItemGroup>
-
-	<!-- For simplicity, publish on build -->
-	<Target Name="RunAotBuild" AfterTargets="Build" DependsOnTargets="Publish" />
-
+ 
 </Project>
