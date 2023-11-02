@@ -9,12 +9,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
-		<PublishTrimmed>true</PublishTrimmed>
 		<InvariantGlobalization>true</InvariantGlobalization>
-		<UseAppHost>false</UseAppHost>
-		<SelfContained>true</SelfContained>
 		<RuntimeIdentifier>wasi-wasm</RuntimeIdentifier>
-		<MSBuildEnableWorkloadResolver>false</MSBuildEnableWorkloadResolver>
     </PropertyGroup>
 
 	<ItemGroup>
