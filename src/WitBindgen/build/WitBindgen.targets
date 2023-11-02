@@ -1,25 +1,34 @@
 ﻿<Project>
-	<Target Name="WitCompile_BeforeCsCompile" BeforeTargets="BeforeCompile" Condition="'$(Language)' == 'C#'">
+	<Target Name="WitCompile_BeforeCsCompile" BeforeTargets="BeforeCompile" Condition="'$(Language)' == 'C#'"
+			DependsOnTargets="WitCompile_GetDependencies; WitCompile_InvokeTool">
+		<ItemGroup>
+			<Compile Include="@(WitGeneratedCsFiles)" />
+		</ItemGroup>
+	</Target>
+
+	<Target Name="WitCompile_GetDependencies">
 		<PropertyGroup>
-			<WitGeneratedFilesRoot Condition="'$(WitGeneratedFilesRoot)' == ''">$(IntermediateOutputPath)wit_generated\</WitGeneratedFilesRoot>
+			<WitGeneratedFilesRoot Condition="'$(WitGeneratedFilesRoot)' == ''">$(IntermediateOutputPath)wit_bindgen\</WitGeneratedFilesRoot>
 		</PropertyGroup>
-
 		<ItemGroup>
-			<Wit Update="@(Wit)">
-				<OutputPath>$(WitGeneratedFilesRoot)%(Wit.Filename).cs</OutputPath>
-			</Wit>
+			<WitGeneratedCsFiles Include="$(WitGeneratedFilesRoot)**\*.cs" />
+		</ItemGroup>
+	</Target>
+
+	<Target Name="WitCompile_InvokeTool" Inputs="@(Wit)" Outputs="@(WitGeneratedCsFiles);$(WitGeneratedFilesRoot)lastbuild.txt">
+		<ItemGroup>
+			<WitGeneratedCsFiles Remove="@(WitGeneratedCsFiles)" />
 		</ItemGroup>
 
-		<Copy SourceFiles="@(Wit)" DestinationFiles="@(Wit->'%(OutputPath)')" />
-
-		<!-- Delete redundant files -->
+		<Message Importance="high" Text="Executing wit-bindgen..." />
+		
+		<RemoveDir Directories="$(WitGeneratedFilesRoot)" />
+		<MakeDir Directories="$(WitGeneratedFilesRoot)" />
+		<Exec Command="$(WitBindgenExe) c-sharp %(Wit.Identity) --out-dir $(WitGeneratedFilesRoot)" />
+		<WriteLinesToFile File="$(WitGeneratedFilesRoot)lastbuild.txt" Lines="" Overwrite="true" />
+		
 		<ItemGroup>
-			<_RedundantWitOutput Include="$(WitGeneratedFilesRoot)**\*.cs" Exclude="@(Wit->'%(OutputPath)')" />
-		</ItemGroup>
-		<Delete Files="@(_RedundantWitOutput)" />
-
-		<ItemGroup>
-			<Compile Include="$(WitGeneratedFilesRoot)**\*.cs" />
+			<WitGeneratedCsFiles Include="$(WitGeneratedFilesRoot)**\*.cs" />
 		</ItemGroup>
 	</Target>
 </Project>
