@@ -1,32 +1,32 @@
 ﻿<ProjectSchemaDefinitions xmlns="http://schemas.microsoft.com/build/2009/properties">
-	<ItemType Name="Wit" DisplayName="WIT generator" />
+    <ItemType Name="Wit" DisplayName="WIT generator" />
 
-	<Rule Name="Wit"
-		  DisplayName="File Properties"
-		  PageTemplate="generic"
-		  Description="File Properties"
-		  OverrideMode="Extend">
-		<Rule.DataSource>
-			<DataSource Persistence="ProjectFile" Label="Configuration" ItemType="Wit"
-						HasConfigurationCondition="false" SourceOfDefaultValue="AfterContext" />
-		</Rule.DataSource>
+    <Rule Name="Wit"
+          DisplayName="File Properties"
+          PageTemplate="generic"
+          Description="File Properties"
+          OverrideMode="Extend">
+        <Rule.DataSource>
+            <DataSource Persistence="ProjectFile" Label="Configuration" ItemType="Wit"
+                        HasConfigurationCondition="false" SourceOfDefaultValue="AfterContext" />
+        </Rule.DataSource>
 
-		<Rule.Categories>
-			<Category Name="Advanced" DisplayName="Advanced" />
-			<Category Name="Wit" DisplayName="WIT" />
-		</Rule.Categories>
+        <Rule.Categories>
+            <Category Name="Advanced" DisplayName="Advanced" />
+            <Category Name="Wit" DisplayName="WIT" />
+        </Rule.Categories>
 
-		<DynamicEnumProperty Name="{}{ItemType}" DisplayName="Build Action"  Category="Advanced"
-					   Description="How the file relates to the build and deployment processes."
-					   EnumProvider="ItemTypes" />
+        <DynamicEnumProperty Name="{}{ItemType}" DisplayName="Build Action"  Category="Advanced"
+                       Description="How the file relates to the build and deployment processes."
+                       EnumProvider="ItemTypes" />
 
-		<BoolProperty Name="WitCompile" DisplayName="Compile WIT"
+        <BoolProperty Name="WitCompile" DisplayName="Compile WIT"
                   Category="Wit" Default="true"
                   Description="Specifies if this file is compiled or only imported by other files.">
-			<BoolProperty.DataSource>
-				<DataSource ItemType="Wit" SourceOfDefaultValue="AfterContext"
-							PersistenceStyle="Attribute" HasConfigurationCondition="false" />
-			</BoolProperty.DataSource>
-		</BoolProperty>
-	</Rule>
+            <BoolProperty.DataSource>
+                <DataSource ItemType="Wit" SourceOfDefaultValue="AfterContext"
+                            PersistenceStyle="Attribute" HasConfigurationCondition="false" />
+            </BoolProperty.DataSource>
+        </BoolProperty>
+    </Rule>
 </ProjectSchemaDefinitions>

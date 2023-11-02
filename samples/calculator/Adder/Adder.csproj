@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<!-- Only needed when referencing the dependencies as projects. For package references, these are imported automatically. -->
-	<Import Project="..\..\..\src\WitBindgen\build\WitBindgen.props" />
+    <!-- Only needed when referencing the dependencies as projects. For package references, these are imported automatically. -->
+    <Import Project="..\..\..\src\WitBindgen\build\WitBindgen.props" />
 
-	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-	</PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-	<!-- Only needed when referencing the dependencies as projects. For package references, these are imported automatically. -->
-	<Import Project="..\..\..\src\WitBindgen\build\WitBindgen.targets" />
+    <!-- Only needed when referencing the dependencies as projects. For package references, these are imported automatically. -->
+    <Import Project="..\..\..\src\WitBindgen\build\WitBindgen.targets" />
 
 </Project>
