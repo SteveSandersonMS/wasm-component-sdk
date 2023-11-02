@@ -1,0 +1,5 @@
+<Project>
+	<!-- Produces the same effect in dev as referencing this package after publish -->
+    <Import Project="build/*.props" />
+    <Import Project="build/*.targets" />
+</Project>

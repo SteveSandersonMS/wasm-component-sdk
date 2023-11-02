@@ -1,15 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <!-- Only needed when referencing the dependencies as projects. For package references, these are imported automatically. -->
-    <Import Project="..\..\..\src\WitBindgen\build\WitBindgen.props" />
+    <Import Project="..\..\..\src\WasmComponent.Sdk\ImportInDev.proj" />
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+		<OutputType>Library</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<PublishTrimmed>true</PublishTrimmed>
+		<InvariantGlobalization>true</InvariantGlobalization>
+		<UseAppHost>false</UseAppHost>
+		<SelfContained>true</SelfContained>
+		<RuntimeIdentifier>wasi-wasm</RuntimeIdentifier>
+		<MSBuildEnableWorkloadResolver>false</MSBuildEnableWorkloadResolver>
     </PropertyGroup>
 
-    <!-- Only needed when referencing the dependencies as projects. For package references, these are imported automatically. -->
-    <Import Project="..\..\..\src\WitBindgen\build\WitBindgen.targets" />
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\src\WasmComponent.Sdk\WasmComponent.Sdk.csproj" />
+	</ItemGroup>
+
+	<!-- For simplicity, publish on build -->
+	<Target Name="RunAotBuild" AfterTargets="Build" DependsOnTargets="Publish" />
 
 </Project>

@@ -52,4 +52,8 @@
 		<RemoveDir Directories="tools\temp" />
 	</Target>
 
+	<ItemGroup>
+	  <None Include="ImportInDev.proj" />
+	</ItemGroup>
+
 </Project>

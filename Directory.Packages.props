@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.DotNet.ILCompiler.LLVM" Version="8.0.0-preview.7.23503.1" />
+    <PackageVersion Include="runtime.win-x64.Microsoft.DotNet.ILCompiler.LLVM" Version="8.0.0-preview.7.23503.1" />
+  </ItemGroup>
+</Project>
