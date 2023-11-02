@@ -1,2 +1,74 @@
 <Project>
+	<!--
+    MSBuild stuff to acquire the necessary SDKs (WASI SDK and Emscripten) automatically. It will take a few mins on the
+    first build on a given machine, but after that should no-op.
+    -->
+
+	<PropertyGroup>
+		<!-- Keep this block all in sync manually, since URLs can be arbitrary -->
+		<WasiSdkVersion>20.0</WasiSdkVersion>
+		<WasiSdkUrl Condition="$([MSBuild]::IsOSPlatform('Windows'))">https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-20/wasi-sdk-20.0.m-mingw.tar.gz</WasiSdkUrl>
+		<WasiSdkUrl Condition="$([MSBuild]::IsOSPlatform('Linux'))">https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-20/wasi-sdk-20.0-linux.tar.gz</WasiSdkUrl>
+		<WasiSdkUrl Condition="$([MSBuild]::IsOSPlatform('OSX'))">https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-20/wasi-sdk-20.0-macos.tar.gz</WasiSdkUrl>
+		<WasiSdkRoot>$([System.IO.Path]::Combine("$([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))", ".wasi-sdk", "wasi-sdk-$(WasiSdkVersion)"))</WasiSdkRoot>
+
+		<EmSdkVersion>3.1.23</EmSdkVersion>
+		<EmSdkUrl>https://github.com/emscripten-core/emsdk/archive/refs/tags/$(EmSdkVersion).zip</EmSdkUrl>
+		<EmscriptenRoot>$([System.IO.Path]::Combine("$([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))", ".emsdk", "emsdk-$(EmSdkVersion)"))</EmscriptenRoot>
+
+		<CopyWasmToOutputDependsOn>
+			$(CopyWasmToOutputDependsOn);
+			ObtainWasiSdk;
+			PrepareBuildWasmInputs;
+			BuildWasm;
+		</CopyWasmToOutputDependsOn>
+	</PropertyGroup>
+
+	<Target Name="PrepareWasmSdks" BeforeTargets="CheckWasmSdks" DependsOnTargets="ObtainWasiSdk; ObtainEmscripten">
+		<PropertyGroup>
+			<EmSdk>$(EmscriptenRoot)</EmSdk>
+			<WASI_SDK_PATH>$(WasiSdkRoot)</WASI_SDK_PATH>
+		</PropertyGroup>
+	</Target>
+
+	<Target Name="ObtainEmscripten" Condition="'$(EMSDK)' == '' AND !(Exists($(EmscriptenRoot)))">
+		<PropertyGroup>
+			<EmSdkDownloadTempDir>$(IntermediateOutputPath)\emsdk-temp</EmSdkDownloadTempDir>
+		</PropertyGroup>
+
+		<MakeDir Directories="$(EmSdkDownloadTempDir)" />
+		<DownloadFile
+            SourceUrl="$(EmSdkUrl)"
+            DestinationFolder="$(EmSdkDownloadTempDir)">
+			<Output TaskParameter="DownloadedFile" ItemName="EmSdkDownloadTempFile" />
+		</DownloadFile>
+
+		<!-- Windows 10+ has tar built in, so this should work cross-platform -->
+		<Message Importance="high" Text="Extracting @(EmSdkDownloadTempFile) to $(EmscriptenRoot)..." />
+		<MakeDir Directories="$(EmscriptenRoot)" />
+		<Exec Command="tar -xf &quot;@(EmSdkDownloadTempFile)&quot; -C . --strip-components=1" WorkingDirectory="$(EmscriptenRoot)" />
+		<RemoveDir Directories="$(EmSdkDownloadTempDir)" />
+
+		<Exec Command="emsdk install $(EmSdkVersion)" WorkingDirectory="$(EmscriptenRoot)" />
+		<Exec Command="emsdk activate $(EmSdkVersion)" WorkingDirectory="$(EmscriptenRoot)" />
+	</Target>
+
+	<Target Name="ObtainWasiSdk" Condition="!(Exists($(WasiSdkRoot)))">
+		<PropertyGroup>
+			<WasiSdkDownloadTempDir>$(IntermediateOutputPath)\wasi-sdk-temp</WasiSdkDownloadTempDir>
+		</PropertyGroup>
+
+		<MakeDir Directories="$(WasiSdkDownloadTempDir)" />
+		<DownloadFile
+            SourceUrl="$(WasiSdkUrl)"
+            DestinationFolder="$(WasiSdkDownloadTempDir)">
+			<Output TaskParameter="DownloadedFile" ItemName="WasiSdkDownloadTempFile" />
+		</DownloadFile>
+
+		<!-- Windows 10+ has tar built in, so this should work cross-platform -->
+		<Message Importance="high" Text="Extracting @(WasiSdkDownloadTempFile) to $(WasiSdkRoot)..." />
+		<MakeDir Directories="$(WasiSdkRoot)" />
+		<Exec Command="tar -xf &quot;@(WasiSdkDownloadTempFile)&quot; -C . --strip-components=1" WorkingDirectory="$(WasiSdkRoot)" />
+		<RemoveDir Directories="$(WasiSdkDownloadTempDir)" />
+	</Target>
 </Project>
