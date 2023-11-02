@@ -1,0 +1,3 @@
+[submodule "modules/wit-bindgen"]
+	path = modules/wit-bindgen
+	url = https://github.com/bytecodealliance/wit-bindgen.git
