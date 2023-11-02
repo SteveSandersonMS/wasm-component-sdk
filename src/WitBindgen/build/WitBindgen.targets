@@ -15,16 +15,19 @@
         </ItemGroup>
     </Target>
 
-    <Target Name="WitCompile_InvokeTool" Inputs="@(Wit)" Outputs="@(WitGeneratedCsFiles);$(WitGeneratedFilesRoot)lastbuild.txt">
+    <Target Name="WitCompile_InvokeTool" Inputs="@(Wit);$(MSBuildProjectFile)" Outputs="@(WitGeneratedCsFiles);$(WitGeneratedFilesRoot)lastbuild.txt">
         <ItemGroup>
             <WitGeneratedCsFiles Remove="@(WitGeneratedCsFiles)" />
+			<Wit Update="@(Wit)">
+				<WitWorldArg Condition="'%(Wit.World)' != ''">--world %(Wit.World)</WitWorldArg>
+			</Wit>
         </ItemGroup>
 
         <Message Importance="high" Text="Executing wit-bindgen..." />
         
         <RemoveDir Directories="$(WitGeneratedFilesRoot)" />
         <MakeDir Directories="$(WitGeneratedFilesRoot)" />
-        <Exec Command="$(WitBindgenExe) c-sharp %(Wit.Identity) --out-dir $(WitGeneratedFilesRoot)" />
+        <Exec Command="$(WitBindgenExe) c-sharp %(Wit.Identity) %(Wit.WitWorldArg) --out-dir $(WitGeneratedFilesRoot)" />
         <WriteLinesToFile File="$(WitGeneratedFilesRoot)lastbuild.txt" Lines="" Overwrite="true" />
         
         <ItemGroup>

@@ -16,5 +16,9 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\src\WasmComponent.Sdk\WasmComponent.Sdk.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Wit Update="calculator.wit" World="host" />
+	</ItemGroup>
  
 </Project>

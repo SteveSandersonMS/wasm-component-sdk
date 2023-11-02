@@ -20,13 +20,11 @@
                        Description="How the file relates to the build and deployment processes."
                        EnumProvider="ItemTypes" />
 
-        <BoolProperty Name="WitCompile" DisplayName="Compile WIT"
-                  Category="Wit" Default="true"
-                  Description="Specifies if this file is compiled or only imported by other files.">
-            <BoolProperty.DataSource>
-                <DataSource ItemType="Wit" SourceOfDefaultValue="AfterContext"
+		<StringProperty Name="World" DisplayName="World" Category="Wit" Description="Selects the 'world' defined in the WIT file">
+			<StringProperty.DataSource>
+				<DataSource ItemType="Wit" SourceOfDefaultValue="AfterContext"
                             PersistenceStyle="Attribute" HasConfigurationCondition="false" />
-            </BoolProperty.DataSource>
-        </BoolProperty>
+			</StringProperty.DataSource>
+		</StringProperty>
     </Rule>
 </ProjectSchemaDefinitions>
