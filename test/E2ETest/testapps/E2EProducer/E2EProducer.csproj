@@ -17,4 +17,8 @@
         <PackageReference Include="WasmComponent.Sdk" Version="$(PackageVersion)-dev" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Wit Update="producer-consumer.wit" World="producer" />
+    </ItemGroup>
+
 </Project>

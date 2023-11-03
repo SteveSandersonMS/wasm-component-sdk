@@ -25,12 +25,10 @@
     <Target Name="BuildTestProjects" DependsOnTargets="PackPackagesForE2ETest" BeforeTargets="CoreBuild">
         <RemoveDir Directories="$(HomeDir)\.nuget\packages\witbindgen\$(VersionPrefix)-dev" />
         <RemoveDir Directories="$(HomeDir)\.nuget\packages\wasmcomponent.sdk\$(VersionPrefix)-dev" />
-        <RemoveDir Directories="..\testapps\E2EConsumer\obj" />
         <RemoveDir Directories="..\testapps\E2EProducer\obj" />
+        <RemoveDir Directories="..\testapps\E2EConsumer\obj" />
         <Exec Command="dotnet restore --no-cache" WorkingDirectory="..\testapps\E2EConsumer" />
-        <Exec Command="dotnet restore --no-cache" WorkingDirectory="..\testapps\E2EProducer" />
         <Exec Command="dotnet build" WorkingDirectory="..\testapps\E2EConsumer" />
-        <Exec Command="dotnet build" WorkingDirectory="..\testapps\E2EProducer" />
     </Target>
 
     <Target Name="PackPackagesForE2ETest">
