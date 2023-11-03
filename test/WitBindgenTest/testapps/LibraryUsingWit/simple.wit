@@ -1,0 +1,5 @@
+package test:simple
+
+world single-world {
+  import do-something: func()
+}
