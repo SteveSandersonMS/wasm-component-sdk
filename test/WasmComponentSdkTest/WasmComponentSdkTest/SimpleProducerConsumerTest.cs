@@ -25,6 +25,22 @@ public class SimpleProducerConsumerTest
         Assert.Contains("export test:producer-consumer/operations", witInfo);
     }
 
+    [Fact]
+    public void CanComposeImportWithExport()
+    {
+        var composed = FindModulePath("../testapps/SimpleConsumer", "composed.wasm");
+        var stdout = ExecuteCommandComponent(composed);
+        Assert.StartsWith("Hello, world on Wasm", stdout);
+        Assert.Contains("123 + 456 = 579", stdout);
+    }
+
+    private static string ExecuteCommandComponent(string componentFilePath)
+    {
+        var startInfo = new ProcessStartInfo(WasmtimeExePath, $"--wasm-features component-model {componentFilePath}") { RedirectStandardOutput = true };
+        var stdout = Process.Start(startInfo)!.StandardOutput.ReadToEnd();
+        return stdout;
+    }
+
     private static string GetWitInfo(string componentFilePath)
     {
         var startInfo = new ProcessStartInfo(WasmToolsExePath, $"component wit {componentFilePath}") { RedirectStandardOutput = true };
