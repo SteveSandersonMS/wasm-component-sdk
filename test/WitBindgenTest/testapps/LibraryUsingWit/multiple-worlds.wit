@@ -1,0 +1,13 @@
+package test:multiple-worlds
+
+interface some-stuff {
+  get-number: func() -> s32
+}
+
+world producer {
+  export some-stuff
+}
+
+world consumer {
+  import some-stuff
+}

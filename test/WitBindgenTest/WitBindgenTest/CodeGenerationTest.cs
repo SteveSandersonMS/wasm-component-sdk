@@ -1,4 +1,5 @@
 using wit_my_funcs;
+using wit_producer;
 using Xunit;
 
 namespace WitBindgenTest;
@@ -23,5 +24,11 @@ public class CodeGenerationTest
         // the function to validate its behavior, as that has nothing to do with WIT codegen
         // and wouldn't even be running as WebAssembly.
         Assert.NotNull((Func<int>)MyFuncsWorldImpl.GetNumber);
+    }
+
+    [Fact]
+    public void CanSpecifyWorld()
+    {
+        Assert.NotNull((Func<int>)SomeStuffImpl.GetNumber);
     }
 }

@@ -12,4 +12,8 @@
 	  <ProjectReference Include="..\..\..\..\src\WitBindgen\WitBindgen.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Wit Update="multiple-worlds.wit" World="producer" />
+	</ItemGroup>
+
 </Project>
