@@ -21,7 +21,8 @@
             <DependencyComponent>../Adder/bin/$(Configuration)/$(TargetFramework)/wasi-wasm/native/Adder.component.wasm</DependencyComponent>
         </PropertyGroup>
         
-        <Exec Command="$(WasmToolsExe) compose -o Calculator.wasm $(EntrypointComponent) -d $(DependencyComponent)" />
+        <MakeDir Directories="dist" />
+        <Exec Command="$(WasmToolsExe) compose -o dist/calculator.wasm $(EntrypointComponent) -d $(DependencyComponent)" />
     </Target>
 
 </Project>
