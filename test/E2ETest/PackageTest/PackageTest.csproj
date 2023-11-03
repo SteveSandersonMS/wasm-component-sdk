@@ -40,8 +40,8 @@
     </Target>
 
     <Target Name="PackPackagesForE2ETest">
-        <Exec Command="dotnet pack WitBindgen.csproj -o $(DevPackagesDir)" WorkingDirectory="..\..\..\src\WitBindgen" />
-        <Exec Command="dotnet pack WasmComponent.Sdk.csproj -o $(DevPackagesDir)" WorkingDirectory="..\..\..\src\WasmComponent.Sdk" />
+        <Exec Command="dotnet pack -c $(Configuration) WitBindgen.csproj -o $(DevPackagesDir)" WorkingDirectory="..\..\..\src\WitBindgen" />
+        <Exec Command="dotnet pack -c $(Configuration) WasmComponent.Sdk.csproj -o $(DevPackagesDir)" WorkingDirectory="..\..\..\src\WasmComponent.Sdk" />
     </Target>
 
 </Project>
