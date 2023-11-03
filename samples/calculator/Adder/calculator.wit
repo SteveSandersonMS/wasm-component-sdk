@@ -8,6 +8,6 @@ world computer {
   export operations;
 }
 
-world app {
+world hostapp {
   import operations;
 }

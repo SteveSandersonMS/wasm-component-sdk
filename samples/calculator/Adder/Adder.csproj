@@ -4,21 +4,21 @@
     <Import Project="..\..\..\src\WasmComponent.Sdk\ImportInDev.proj" />
 
     <PropertyGroup>
-		<OutputType>Library</OutputType>
-		<TargetFramework>net8.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
 
-		<InvariantGlobalization>true</InvariantGlobalization>
-		<RuntimeIdentifier>wasi-wasm</RuntimeIdentifier>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <RuntimeIdentifier>wasi-wasm</RuntimeIdentifier>
     </PropertyGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\..\..\src\WasmComponent.Sdk\WasmComponent.Sdk.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\src\WasmComponent.Sdk\WasmComponent.Sdk.csproj" />
+    </ItemGroup>
 
-	<ItemGroup>
-	  <Wit Update="calculator.wit" World="computer" />
-	</ItemGroup>
+    <ItemGroup>
+      <Wit Update="calculator.wit" World="computer" />
+    </ItemGroup>
  
 </Project>
