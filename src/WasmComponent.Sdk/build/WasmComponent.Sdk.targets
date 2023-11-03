@@ -64,7 +64,7 @@
         <!-- Windows 10+ has tar built in, so this should work cross-platform -->
         <Message Importance="high" Text="Extracting @(EmSdkDownloadTempFile) to $(EmscriptenRoot)..." />
         <MakeDir Directories="$(EmscriptenRoot)" />
-        <Exec Command="tar -xf &quot;@(EmSdkDownloadTempFile)&quot; -C . --strip-components=1" WorkingDirectory="$(EmscriptenRoot)" />
+        <Exec Condition="!(Exists($(EmscriptenRoot)))" Command="tar -xf &quot;@(EmSdkDownloadTempFile)&quot; -C . --strip-components=1" WorkingDirectory="$(EmscriptenRoot)" />
         <RemoveDir Directories="$(EmSdkDownloadTempDir)" />
 
         <Exec Command="emsdk install $(EmSdkVersion)" WorkingDirectory="$(EmscriptenRoot)" />
@@ -86,7 +86,7 @@
         <!-- Windows 10+ has tar built in, so this should work cross-platform -->
         <Message Importance="high" Text="Extracting @(WasiSdkDownloadTempFile) to $(WasiSdkRoot)..." />
         <MakeDir Directories="$(WasiSdkRoot)" />
-        <Exec Command="tar -xf &quot;@(WasiSdkDownloadTempFile)&quot; -C . --strip-components=1" WorkingDirectory="$(WasiSdkRoot)" />
+        <Exec Condition="!(Exists($(WasiSdkRoot)))" Command="tar -xf &quot;@(WasiSdkDownloadTempFile)&quot; -C . --strip-components=1" WorkingDirectory="$(WasiSdkRoot)" />
         <RemoveDir Directories="$(WasiSdkDownloadTempDir)" />
     </Target>
 </Project>
