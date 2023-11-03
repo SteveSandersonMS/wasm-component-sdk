@@ -2,7 +2,8 @@
     <Target Name="WitCompile_BeforeCsCompile" BeforeTargets="BeforeCompile" Condition="'$(Language)' == 'C#'"
             DependsOnTargets="WitCompile_GetDependencies; WitCompile_InvokeTool">
         <ItemGroup>
-            <Compile Include="@(WitGeneratedCsFiles)" />
+            <Compile Include="$(WitGeneratedFilesRoot)**\*.cs" />
+            <NativeObjects Include="$(WitGeneratedFilesRoot)**\*.o" />
         </ItemGroup>
     </Target>
 
@@ -18,9 +19,9 @@
     <Target Name="WitCompile_InvokeTool" Inputs="@(Wit);$(MSBuildProjectFile)" Outputs="@(WitGeneratedCsFiles);$(WitGeneratedFilesRoot)lastbuild.txt">
         <ItemGroup>
             <WitGeneratedCsFiles Remove="@(WitGeneratedCsFiles)" />
-			<Wit Update="@(Wit)">
-				<WitWorldArg Condition="'%(Wit.World)' != ''">--world %(Wit.World)</WitWorldArg>
-			</Wit>
+            <Wit Update="@(Wit)">
+                <WitWorldArg Condition="'%(Wit.World)' != ''">--world %(Wit.World)</WitWorldArg>
+            </Wit>
         </ItemGroup>
 
         <Message Importance="high" Text="Executing wit-bindgen..." />

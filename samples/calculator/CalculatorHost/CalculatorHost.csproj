@@ -19,7 +19,10 @@
 
 	<ItemGroup>
 		<Wit Include="..\Adder\calculator.wit" World="hostapp" />
-		<WasmImport Include="example:calculator!add" />
+		
+		<!-- Ideally this would be unnecessary, either because the MSBuild tooling adds it automatically, -->
+		<!-- or better still, the generated .cs code should include the full required annotations -->
+		<WasmImport Include="example:calculator/operations!add" />
 	</ItemGroup>
 
 </Project>
