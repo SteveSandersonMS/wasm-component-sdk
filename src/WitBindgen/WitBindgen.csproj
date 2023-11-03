@@ -5,6 +5,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
 
         <!-- Things you might want to edit -->
         <!-- Set BuildWitBindgenLocally to true if you want to build modules/wit-bindgen locally and use its output -->

@@ -25,11 +25,14 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
+
+        <!-- To ensure we don't build this until we've built the underlying packages -->
+        <ProjectReference Include="..\..\..\src\WasmComponent.Sdk\WasmComponent.Sdk.csproj" ReferenceOutputAssembly="false" />
     </ItemGroup>
 
-    <Target Name="BuildTestProjects" DependsOnTargets="PackPackagesForE2ETest" BeforeTargets="CoreBuild">
-        <RemoveDir Directories="$(HomeDir)\.nuget\packages\witbindgen\$(VersionPrefix)-dev" />
-        <RemoveDir Directories="$(HomeDir)\.nuget\packages\wasmcomponent.sdk\$(VersionPrefix)-dev" />
+    <Target Name="BuildTestProjects" DependsOnTargets="PackPackagesForE2ETest" BeforeTargets="Build">
+        <RemoveDir Directories="$(HomeDir)\.nuget\packages\witbindgen\$(PackageVersion)" />
+        <RemoveDir Directories="$(HomeDir)\.nuget\packages\wasmcomponent.sdk\$(PackageVersion)" />
         <RemoveDir Directories="..\testapps\E2EProducer\obj" />
         <RemoveDir Directories="..\testapps\E2EConsumer\obj" />
         <Exec Command="dotnet restore --no-cache" WorkingDirectory="..\testapps\E2EConsumer" />
@@ -37,8 +40,8 @@
     </Target>
 
     <Target Name="PackPackagesForE2ETest">
-        <Exec Command="dotnet pack WitBindgen.csproj --version-suffix dev -o $(DevPackagesDir)" WorkingDirectory="..\..\..\src\WitBindgen" />
-        <Exec Command="dotnet pack WasmComponent.Sdk.csproj --version-suffix dev -o $(DevPackagesDir)" WorkingDirectory="..\..\..\src\WasmComponent.Sdk" />
+        <Exec Command="dotnet pack -c $(Configuration) WitBindgen.csproj -o $(DevPackagesDir)" WorkingDirectory="..\..\..\src\WitBindgen" />
+        <Exec Command="dotnet pack -c $(Configuration) WasmComponent.Sdk.csproj -o $(DevPackagesDir)" WorkingDirectory="..\..\..\src\WasmComponent.Sdk" />
     </Target>
 
 </Project>

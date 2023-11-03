@@ -4,6 +4,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
 
         <PrebuiltWasmToolsVersion>1.0.40</PrebuiltWasmToolsVersion>
         <PrebuiltWasmToolsBaseUrl>https://github.com/bytecodealliance/wasm-tools/releases/download/wasm-tools-$(PrebuiltWasmToolsVersion)/wasm-tools-$(PrebuiltWasmToolsVersion)</PrebuiltWasmToolsBaseUrl>
@@ -24,7 +25,7 @@
         <None Include="ImportInDev.proj" />
     </ItemGroup>
 
-    <Target Name="DownloadNativeTooling" BeforeTargets="BeforeBuild" DependsOnTargets="GetDownloadNativeToolingDependencies; DownloadNativeToolingCore">
+    <Target Name="DownloadNativeTooling" BeforeTargets="Build" DependsOnTargets="GetDownloadNativeToolingDependencies; DownloadNativeToolingCore">
     </Target>
 
     <Target Name="GetDownloadNativeToolingDependencies">
