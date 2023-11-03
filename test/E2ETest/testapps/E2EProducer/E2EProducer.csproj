@@ -14,7 +14,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="WasmComponent.Sdk" Version="$(PackageVersion)-dev" />
+        <PackageReference Include="WasmComponent.Sdk" Version="$(PackageVersion)" />
     </ItemGroup>
 
     <ItemGroup>
