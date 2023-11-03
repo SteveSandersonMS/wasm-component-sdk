@@ -24,7 +24,8 @@
         </CopyWasmToOutputDependsOn>
     </PropertyGroup>
 
-    <Target Name="EmitWasmOnBuild" AfterTargets="Build" DependsOnTargets="LinkNativeLlvm; ConvertToWasmComponent">
+    <Target Name="EmitWasmOnBuild" AfterTargets="Build" DependsOnTargets="LinkNativeLlvm; ConvertToWasmComponent"
+            Condition="'$(RuntimeIdentifier)' == 'wasi-wasm'">
         <Message Importance="high" Text="$(ProjectName) -> $([System.IO.Path]::GetFullPath('$(NativeComponentBinary)'))" />
     </Target>
 

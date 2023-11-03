@@ -1,16 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <!-- Only needed when referencing the dependencies as projects. For package references, these are imported automatically. -->
+    <Import Project="..\..\..\src\WasmComponent.Sdk\ImportInDev.proj" />
 
-	<!-- THIS IS NOT REALLY A .NET PROJECT -->
-	<!-- It's just a csproj that can be used to invoke the wasm tooling to compose the runnable component -->
-	<!-- and express a dependency on the two implementation components. -->
+    <!-- THIS IS NOT REALLY A .NET PROJECT -->
+    <!-- It's just a csproj that can be used to invoke the wasm tooling to compose the runnable component -->
+    <!-- and express a dependency on the two implementation components. -->
 
-	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-	</PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+    </PropertyGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\Adder\Adder.csproj" />
-	  <ProjectReference Include="..\CalculatorHost\CalculatorHost.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Adder\Adder.csproj" />
+      <ProjectReference Include="..\CalculatorHost\CalculatorHost.csproj" />
+    </ItemGroup>
+
+    <Target Name="ComposeWasmComponent" BeforeTargets="Build">
+        <PropertyGroup>
+            <EntrypointComponent>../CalculatorHost/bin/$(Configuration)/$(TargetFramework)/wasi-wasm/native/CalculatorHost.component.wasm</EntrypointComponent>
+            <DependencyComponent>../Adder/bin/$(Configuration)/$(TargetFramework)/wasi-wasm/native/Adder.component.wasm</DependencyComponent>
+        </PropertyGroup>
+        
+        <Exec Command="$(WasmToolsExe) compose -o Calculator.wasm $(EntrypointComponent) -d $(DependencyComponent)" />
+    </Target>
 
 </Project>
