@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - name: Check run number
-      run: echo "Run num: ${{ github.run_number }}"
+      run: echo "Run num ${{ github.run_number }}"
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
