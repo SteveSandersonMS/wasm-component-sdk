@@ -4,16 +4,42 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+
+        <PrebuiltWasmToolsVersion>1.0.50</PrebuiltWasmToolsVersion>
+        <PrebuiltWasmToolsBaseUrl>https://github.com/bytecodealliance/wasm-tools/releases/download/wasm-tools-$(PrebuiltWasmToolsVersion)/wasm-tools-$(PrebuiltWasmToolsVersion)</PrebuiltWasmToolsBaseUrl>
     </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Microsoft.DotNet.ILCompiler.LLVM" />
-		<PackageReference Include="runtime.win-x64.Microsoft.DotNet.ILCompiler.LLVM" />
-		<ProjectReference Include="..\WitBindgen\WitBindgen.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.DotNet.ILCompiler.LLVM" />
+        <PackageReference Include="runtime.win-x64.Microsoft.DotNet.ILCompiler.LLVM" />
+        <ProjectReference Include="..\WitBindgen\WitBindgen.csproj" />
+    </ItemGroup>
 
-	<ItemGroup>
-		<None Include="ImportInDev.proj" />
-	</ItemGroup>
+    <ItemGroup>
+        <None Include="ImportInDev.proj" />
+    </ItemGroup>
+
+    <Target Name="DownloadNativeTooling" BeforeTargets="BeforeBuild" DependsOnTargets="GetDownloadNativeToolingDependencies; DownloadNativeToolingCore">
+    </Target>
+
+    <Target Name="GetDownloadNativeToolingDependencies">
+        <ItemGroup>
+            <PrebuiltWasmToolsTarget Include="aarch64-linux" Rid="linux-arm64" Ext=".tar.gz" />
+            <PrebuiltWasmToolsTarget Include="aarch64-macos" Rid="osx-arm64" Ext=".tar.gz" />
+            <PrebuiltWasmToolsTarget Include="x86_64-linux" Rid="linux-x64" Ext=".tar.gz" />
+            <PrebuiltWasmToolsTarget Include="x86_64-macos" Rid="osx-x64" Ext=".tar.gz" />
+            <PrebuiltWasmToolsTarget Include="x86_64-windows" Rid="win-x64" Ext=".zip" ExeExt=".exe" />
+        </ItemGroup>
+        <ItemGroup>
+            <PrebuiltWasmToolsOutputs Include="tools\%(PrebuiltWasmToolsTarget.Rid)\wasm-tools%(PrebuiltWasmToolsTarget.ExeExt)" />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="DownloadNativeToolingCore" Inputs="@(PrebuiltWasmToolsOutputs)" Outputs="@(PrebuiltWasmToolsOutputs)">
+        <DownloadFile SourceUrl="$(PrebuiltWasmToolsBaseUrl)-%(PrebuiltWasmToolsTarget.Identity)%(PrebuiltWasmToolsTarget.Ext)" DestinationFolder="tools\temp" DestinationFileName="%(PrebuiltWasmToolsTarget.Rid)%(PrebuiltWasmToolsTarget.Ext)" />
+        <MakeDir Directories="tools\%(PrebuiltWasmToolsTarget.Rid)" />
+        <Exec Command="tar -xf &quot;temp/%(PrebuiltWasmToolsTarget.Rid)%(PrebuiltWasmToolsTarget.Ext)&quot; -C %(PrebuiltWasmToolsTarget.Rid) --strip-components=1" WorkingDirectory="tools" />
+        <RemoveDir Directories="tools\temp" />
+    </Target>
 
 </Project>
