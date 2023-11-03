@@ -1,5 +1,6 @@
 package test:simple
 
-world single-world {
+world my-funcs {
   import do-something: func()
+  export get-number: func() -> s32
 }

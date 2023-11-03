@@ -1,3 +1,4 @@
+using wit_my_funcs;
 using Xunit;
 
 namespace WitBindgenTest;
@@ -13,5 +14,14 @@ public class CodeGenerationTest
 
         // Currently, it generates [DllImport("*", ...)] so validate that
         Assert.StartsWith("Unable to load DLL '*'", ex.Message);
+    }
+
+    [Fact]
+    public void GeneratesSimpleExport()
+    {
+        // The fact that this compiles is what matters. There would be no point calling
+        // the function to validate its behavior, as that has nothing to do with WIT codegen
+        // and wouldn't even be running as WebAssembly.
+        Assert.NotNull((Func<int>)MyFuncsWorldImpl.GetNumber);
     }
 }

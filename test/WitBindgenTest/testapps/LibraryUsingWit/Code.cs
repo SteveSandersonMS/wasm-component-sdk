@@ -1,11 +1,9 @@
-﻿using wit_single_world.exports;
-
-namespace LibraryUsingWit;
+﻿namespace LibraryUsingWit;
 
 public class Code
 {
     public static void CallSimpleDoSomething()
     {
-        SingleWorldWorld.DoSomething();
+        wit_my_funcs.exports.MyFuncsWorld.DoSomething();
     }
 }
