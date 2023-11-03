@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="..\..\WasmtimeCliFetcher\FetchWasmtime.targets" />
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -12,6 +13,10 @@
         <HomeDir>$(UserProfile)</HomeDir>
         <HomeDir Condition="'$(HomeDir)' == ''">$(Home)</HomeDir>
     </PropertyGroup>
+
+    <ItemGroup>
+        <AssemblyMetadata Include="WasmtimeExe" Value="$(WasmtimeExe)" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
