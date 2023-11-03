@@ -4,5 +4,6 @@
         <VersionSuffix Condition="'$(VersionSuffix)' == ''">dev</VersionSuffix>
         <PackageOutputPath>$(MSBuildThisFileDirectory)artifacts\</PackageOutputPath>
         <IsPackable>false</IsPackable>
+        <NoWarn>$(NoWarn);NU1507</NoWarn>
     </PropertyGroup>
 </Project>
