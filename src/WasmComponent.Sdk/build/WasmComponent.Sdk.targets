@@ -25,19 +25,20 @@
     </PropertyGroup>
 
     <Target Name="EmitWasmOnBuild" AfterTargets="Build" DependsOnTargets="LinkNativeLlvm; ConvertToWasmComponent">
-        <Message Importance="high" Text="$(ProjectName) -> $([System.IO.Path]::GetFullPath('$(NativeBinary)'))" />
+        <Message Importance="high" Text="$(ProjectName) -> $([System.IO.Path]::GetFullPath('$(NativeComponentBinary)'))" />
     </Target>
 
-    <Target Name="ConvertToWasmComponent">
+    <Target Name="ConvertToWasmComponent" DependsOnTargets="GetConvertToWasmComponentDependencies" Inputs="$(WasiPreview1AdapterPath);$(NativeBinary)" Outputs="$(NativeComponentBinary)" >
+        <Exec Command="$(WasmToolsExe) component new $(NativeBinary) -o $(NativeComponentBinary) --adapt $(WasiPreview1AdapterPath)" />
+    </Target>
+
+    <Target Name="GetConvertToWasmComponentDependencies">
         <PropertyGroup>
             <WasiPreview1AdapterType>reactor</WasiPreview1AdapterType>
             <WasiPreview1AdapterType Condition="'$(OutputType.ToLower())' == 'exe'">command</WasiPreview1AdapterType>
             <WasiPreview1AdapterPath>$(MSBuildThisFileDirectory)../tools/wasi-wasm/wasi_snapshot_preview1.$(WasiPreview1AdapterType).wasm</WasiPreview1AdapterPath>
+            <NativeComponentBinary>$(NativeOutputPath)$(TargetName).component.wasm</NativeComponentBinary>
         </PropertyGroup>
-
-        <Exec Command="$(WasmToolsExe) component new $(NativeBinary) -o $(NativeBinary).component.wasm --adapt $(WasiPreview1AdapterPath)" />
-        <Delete Files="$(NativeBinary)" />
-        <Move SourceFiles="$(NativeBinary).component.wasm" DestinationFiles="$(NativeBinary)" />
     </Target>
 
     <Target Name="PrepareWasmSdks" BeforeTargets="CheckWasmSdks" DependsOnTargets="ObtainWasiSdk; ObtainEmscripten">
