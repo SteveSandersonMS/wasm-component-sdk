@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adder", "samples\calculator
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculatorHost", "samples\calculator\CalculatorHost\CalculatorHost.csproj", "{09E495AF-959E-4B3C-90FC-7E6CD5869F27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorComposed", "samples\calculator\CalculatorComposed\CalculatorComposed.csproj", "{D6691373-08CB-466F-A230-A038BD82D6CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculatorComposed", "samples\calculator\CalculatorComposed\CalculatorComposed.csproj", "{D6691373-08CB-466F-A230-A038BD82D6CD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A1E6722B-B184-4AB8-9629-E6A5E76EE9CA}"
 EndProject
@@ -25,19 +25,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WitBindgenTest", "WitBindge
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "testapps", "testapps", "{54191E3B-7EB0-4050-B781-415A87685BE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryUsingWit", "test\WitBindgenTest\testapps\LibraryUsingWit\LibraryUsingWit.csproj", "{20ED9DCE-3911-4382-BE1A-14BA3382A930}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryUsingWit", "test\WitBindgenTest\testapps\LibraryUsingWit\LibraryUsingWit.csproj", "{20ED9DCE-3911-4382-BE1A-14BA3382A930}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WitBindgenTest", "test\WitBindgenTest\WitBindgenTest\WitBindgenTest.csproj", "{9B56CBAA-3E96-4ABD-A7E2-A986ADFD3408}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WitBindgenTest", "test\WitBindgenTest\WitBindgenTest\WitBindgenTest.csproj", "{9B56CBAA-3E96-4ABD-A7E2-A986ADFD3408}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WasmComponentSdkTest", "WasmComponentSdkTest", "{FD37EDE5-DB46-4501-9153-7668C7CB9930}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "testapps", "testapps", "{C9AB3852-164F-4DBA-B794-D9CC298174D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleProducer", "test\WasmComponentSdkTest\testapps\SimpleProducer\SimpleProducer.csproj", "{9176AC70-039F-43B5-BA3D-CDF9FE1D3BFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleProducer", "test\WasmComponentSdkTest\testapps\SimpleProducer\SimpleProducer.csproj", "{9176AC70-039F-43B5-BA3D-CDF9FE1D3BFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleConsumer", "test\WasmComponentSdkTest\testapps\SimpleConsumer\SimpleConsumer.csproj", "{BBF34708-0583-4708-AB93-CECADB446B8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleConsumer", "test\WasmComponentSdkTest\testapps\SimpleConsumer\SimpleConsumer.csproj", "{BBF34708-0583-4708-AB93-CECADB446B8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WasmComponentSdkTest", "test\WasmComponentSdkTest\WasmComponentSdkTest\WasmComponentSdkTest.csproj", "{2BAB8E09-C4EC-40D3-9378-5BFB6620B26B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmComponentSdkTest", "test\WasmComponentSdkTest\WasmComponentSdkTest\WasmComponentSdkTest.csproj", "{2BAB8E09-C4EC-40D3-9378-5BFB6620B26B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WasmtimeCliFetcher", "WasmtimeCliFetcher", "{BAA8D48E-411B-4135-9E4F-5B01F5CF3C62}"
+	ProjectSection(SolutionItems) = preProject
+		test\WasmtimeCliFetcher\FetchWasmtime.targets = test\WasmtimeCliFetcher\FetchWasmtime.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +110,7 @@ Global
 		{9176AC70-039F-43B5-BA3D-CDF9FE1D3BFB} = {C9AB3852-164F-4DBA-B794-D9CC298174D6}
 		{BBF34708-0583-4708-AB93-CECADB446B8B} = {C9AB3852-164F-4DBA-B794-D9CC298174D6}
 		{2BAB8E09-C4EC-40D3-9378-5BFB6620B26B} = {FD37EDE5-DB46-4501-9153-7668C7CB9930}
+		{BAA8D48E-411B-4135-9E4F-5B01F5CF3C62} = {A1E6722B-B184-4AB8-9629-E6A5E76EE9CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F033B40-BF0A-4D81-B1D6-84080B73D385}

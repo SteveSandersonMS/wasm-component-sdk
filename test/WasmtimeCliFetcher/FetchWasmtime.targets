@@ -1,0 +1,24 @@
+<Project>
+    <PropertyGroup>
+        <WasmtimeVersion>13.0.0</WasmtimeVersion>
+
+        <WasmtimeTarget Condition="$([MSBuild]::IsOSPlatform('Windows'))">mingw</WasmtimeTarget>
+        <WasmtimeTarget Condition="$([MSBuild]::IsOSPlatform('Linux'))">linux</WasmtimeTarget>
+        <WasmtimeTarget Condition="$([MSBuild]::IsOSPlatform('OSX'))">macos</WasmtimeTarget>
+        <WasmtimeTarget Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture.ToString().ToLower())' == 'x64'">x86_64-$(WasmtimeTarget)</WasmtimeTarget>
+        <WasmtimeTarget Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture.ToString().ToLower())' == 'arm64'">aarch64-$(WasmtimeTarget)</WasmtimeTarget>
+
+        <WasmtimeExe>$(MSBuildThisFileDirectory)tools\wasmtime</WasmtimeExe>
+        <WasmtimeExe Condition="$([MSBuild]::IsOSPlatform('Windows'))">$(WasmtimeExe).exe</WasmtimeExe>
+
+        <WasmtimeUrlExtension>.tar.gz</WasmtimeUrlExtension>
+        <WasmtimeUrlExtension Condition="$([MSBuild]::IsOSPlatform('Windows'))">.zip</WasmtimeUrlExtension>
+        <WasmtimeUrl>https://github.com/bytecodealliance/wasmtime/releases/download/v$(WasmtimeVersion)/wasmtime-v$(WasmtimeVersion)-$(WasmtimeTarget)$(WasmtimeUrlExtension)</WasmtimeUrl>
+    </PropertyGroup>
+
+    <Target Name="AcquireWasmtime" BeforeTargets="CoreBuild" Condition="!Exists('$(WasmtimeExe)')">
+        <DownloadFile SourceUrl="$(WasmtimeUrl)" DestinationFolder="$(MSBuildThisFileDirectory)tools" DestinationFileName="temp$(WasmtimeUrlExtension)" />
+        <Exec Command="tar -xf temp$(WasmtimeUrlExtension) --strip-components=1" WorkingDirectory="$(MSBuildThisFileDirectory)tools" />
+        <Delete Files="$(MSBuildThisFileDirectory)tools\temp$(WasmtimeUrlExtension)" />
+    </Target>
+</Project>
