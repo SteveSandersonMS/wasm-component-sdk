@@ -1,7 +1,13 @@
-package example:host
+package example:calculator
 
-world host {
-  import print: func(msg: string)
+interface operations {
+	add: func(left: s32, right: s32) -> s32;
+}
 
-  export run: func()
+world computer {
+  export operations;
+}
+
+world app {
+  import operations;
 }

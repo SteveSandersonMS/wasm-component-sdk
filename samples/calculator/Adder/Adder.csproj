@@ -18,7 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Wit Update="calculator.wit" World="host" />
+	  <Wit Update="calculator.wit" World="computer" />
 	</ItemGroup>
  
 </Project>
