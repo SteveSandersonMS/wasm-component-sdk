@@ -19,6 +19,7 @@
 
 	<ItemGroup>
 		<Wit Include="..\Adder\calculator.wit" World="hostapp" />
+		<WasmImport Include="example:calculator!add" />
 	</ItemGroup>
 
 </Project>
