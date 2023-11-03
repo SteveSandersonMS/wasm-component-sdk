@@ -5,9 +5,9 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
 
-        <PrebuiltWasmToolsVersion>1.0.50</PrebuiltWasmToolsVersion>
+        <PrebuiltWasmToolsVersion>1.0.40</PrebuiltWasmToolsVersion>
         <PrebuiltWasmToolsBaseUrl>https://github.com/bytecodealliance/wasm-tools/releases/download/wasm-tools-$(PrebuiltWasmToolsVersion)/wasm-tools-$(PrebuiltWasmToolsVersion)</PrebuiltWasmToolsBaseUrl>
-        <WasmtimeVersionForWasiSnapshotPreview1Adapters>14.0.4</WasmtimeVersionForWasiSnapshotPreview1Adapters>
+        <WasmtimeVersionForWasiSnapshotPreview1Adapters>13.0.0</WasmtimeVersionForWasiSnapshotPreview1Adapters>
     </PropertyGroup>
 
     <ItemGroup>
