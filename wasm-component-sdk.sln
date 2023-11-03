@@ -44,6 +44,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WasmtimeCliFetcher", "Wasmt
 		test\WasmtimeCliFetcher\FetchWasmtime.targets = test\WasmtimeCliFetcher\FetchWasmtime.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "E2ETest", "E2ETest", "{B3F60B5E-F19A-4E69-91B5-51053E6BBF5A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackageTest", "test\E2ETest\PackageTest\PackageTest.csproj", "{777FE7FE-1B1A-4848-BE4A-7670A92DEBCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +94,10 @@ Global
 		{2BAB8E09-C4EC-40D3-9378-5BFB6620B26B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BAB8E09-C4EC-40D3-9378-5BFB6620B26B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BAB8E09-C4EC-40D3-9378-5BFB6620B26B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{777FE7FE-1B1A-4848-BE4A-7670A92DEBCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{777FE7FE-1B1A-4848-BE4A-7670A92DEBCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{777FE7FE-1B1A-4848-BE4A-7670A92DEBCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{777FE7FE-1B1A-4848-BE4A-7670A92DEBCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +119,8 @@ Global
 		{BBF34708-0583-4708-AB93-CECADB446B8B} = {C9AB3852-164F-4DBA-B794-D9CC298174D6}
 		{2BAB8E09-C4EC-40D3-9378-5BFB6620B26B} = {FD37EDE5-DB46-4501-9153-7668C7CB9930}
 		{BAA8D48E-411B-4135-9E4F-5B01F5CF3C62} = {A1E6722B-B184-4AB8-9629-E6A5E76EE9CA}
+		{B3F60B5E-F19A-4E69-91B5-51053E6BBF5A} = {A1E6722B-B184-4AB8-9629-E6A5E76EE9CA}
+		{777FE7FE-1B1A-4848-BE4A-7670A92DEBCC} = {B3F60B5E-F19A-4E69-91B5-51053E6BBF5A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F033B40-BF0A-4D81-B1D6-84080B73D385}
