@@ -15,8 +15,8 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Get package version suffix
-      run: echo "PACKAGE_VERSION_SUFFIX=preview.$(printf $((${{ github.run_number }}+10000)))" >> $GITHUB_ENV
+    - name: Check run number
+      run: echo "Run num: ${{ github.run_number }}"
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
@@ -27,11 +27,11 @@ jobs:
     - name: Prepare WASM SDKs
       run: dotnet msbuild src/WasmComponent.Sdk/build/WasmComponent.Sdk.targets /t:PrepareWasmSdks
     - name: Build
-      run: dotnet build --no-restore /p:VersionSuffix=${{ env.PACKAGE_VERSION_SUFFIX }}
+      run: dotnet build --no-restore /p:VersionSuffix=${{ github.run_number }}
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Pack
-      run: dotnet pack -c Release /p:VersionSuffix=${{ env.PACKAGE_VERSION_SUFFIX }}
+      run: dotnet pack -c Release /p:VersionSuffix=${{ github.run_number }}
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
