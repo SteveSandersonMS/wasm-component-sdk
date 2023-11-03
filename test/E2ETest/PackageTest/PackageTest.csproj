@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -7,6 +7,7 @@
 
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
+        <DevPackagesDir>$(MSBuildThisFileDirectory)packages</DevPackagesDir>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,5 +18,17 @@
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>
+
+    <Target Name="BuildTestProjects" DependsOnTargets="PackPackagesForE2ETest" BeforeTargets="CoreBuild">
+        <Exec Command="dotnet restore --no-cache" WorkingDirectory="..\testapps\E2EConsumer" />
+        <Exec Command="dotnet restore --no-cache" WorkingDirectory="..\testapps\E2EProducer" />
+        <Exec Command="dotnet build" WorkingDirectory="..\testapps\E2EConsumer" />
+        <Exec Command="dotnet build" WorkingDirectory="..\testapps\E2EProducer" />
+    </Target>
+
+    <Target Name="PackPackagesForE2ETest">
+        <Exec Command="dotnet pack WitBindgen.csproj --version-suffix dev -o $(DevPackagesDir)" WorkingDirectory="..\..\..\src\WitBindgen" />
+        <Exec Command="dotnet pack WasmComponent.Sdk.csproj --version-suffix dev -o $(DevPackagesDir)" WorkingDirectory="..\..\..\src\WasmComponent.Sdk" />
+    </Target>
 
 </Project>

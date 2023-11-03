@@ -7,6 +7,9 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <RuntimeIdentifier>wasi-wasm</RuntimeIdentifier>
     </PropertyGroup>
 
     <ItemGroup>
