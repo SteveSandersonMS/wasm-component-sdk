@@ -8,6 +8,10 @@
         <PrebuiltWasmToolsVersion>1.0.40</PrebuiltWasmToolsVersion>
         <PrebuiltWasmToolsBaseUrl>https://github.com/bytecodealliance/wasm-tools/releases/download/wasm-tools-$(PrebuiltWasmToolsVersion)/wasm-tools-$(PrebuiltWasmToolsVersion)</PrebuiltWasmToolsBaseUrl>
         <WasmtimeVersionForWasiSnapshotPreview1Adapters>13.0.0</WasmtimeVersionForWasiSnapshotPreview1Adapters>
+
+        <!-- Don't pack any assemblies in lib/*/.dll.-->
+        <NoPackageAnalysis>true</NoPackageAnalysis>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
     </PropertyGroup>
 
     <ItemGroup>
@@ -46,6 +50,13 @@
         <MakeDir Directories="tools\%(PrebuiltWasmToolsTarget.Rid)" />
         <Exec Command="tar -xf &quot;temp/%(PrebuiltWasmToolsTarget.Rid)%(PrebuiltWasmToolsTarget.Ext)&quot; -C %(PrebuiltWasmToolsTarget.Rid) --strip-components=1" WorkingDirectory="tools" />
         <RemoveDir Directories="tools\temp" />
+    </Target>
+
+    <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
+        <ItemGroup>
+            <_PackageFiles Include="build\**" BuildAction="Content" PackagePath="build" />
+            <_PackageFiles Include="tools\**" BuildAction="Content" PackagePath="tools" />
+        </ItemGroup>
     </Target>
 
 </Project>

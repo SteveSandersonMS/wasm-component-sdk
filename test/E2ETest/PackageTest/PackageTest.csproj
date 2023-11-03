@@ -8,6 +8,9 @@
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
         <DevPackagesDir>$(MSBuildThisFileDirectory)packages</DevPackagesDir>
+
+        <HomeDir>$(UserProfile)</HomeDir>
+        <HomeDir Condition="'$(HomeDir)' == ''">$(Home)</HomeDir>
     </PropertyGroup>
 
     <ItemGroup>
@@ -20,6 +23,10 @@
     </ItemGroup>
 
     <Target Name="BuildTestProjects" DependsOnTargets="PackPackagesForE2ETest" BeforeTargets="CoreBuild">
+        <RemoveDir Directories="$(HomeDir)\.nuget\packages\witbindgen\$(VersionPrefix)-dev" />
+        <RemoveDir Directories="$(HomeDir)\.nuget\packages\wasmcomponent.sdk\$(VersionPrefix)-dev" />
+        <RemoveDir Directories="..\testapps\E2EConsumer\obj" />
+        <RemoveDir Directories="..\testapps\E2EProducer\obj" />
         <Exec Command="dotnet restore --no-cache" WorkingDirectory="..\testapps\E2EConsumer" />
         <Exec Command="dotnet restore --no-cache" WorkingDirectory="..\testapps\E2EProducer" />
         <Exec Command="dotnet build" WorkingDirectory="..\testapps\E2EConsumer" />

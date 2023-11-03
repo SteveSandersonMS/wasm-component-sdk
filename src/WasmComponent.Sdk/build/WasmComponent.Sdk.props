@@ -2,7 +2,6 @@
 	<PropertyGroup>
 		<PublishTrimmed>true</PublishTrimmed>
 		<UseAppHost>false</UseAppHost>
-		<SelfContained>true</SelfContained>
 		<MSBuildEnableWorkloadResolver>false</MSBuildEnableWorkloadResolver>
 
 		<WasmToolsTarget Condition="$([MSBuild]::IsOSPlatform('Windows'))">win</WasmToolsTarget>
