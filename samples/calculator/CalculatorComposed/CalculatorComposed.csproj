@@ -11,11 +11,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Adder\Adder.csproj" />
-      <ProjectReference Include="..\CalculatorHost\CalculatorHost.csproj" />
+      <ProjectReference Include="..\Adder\Adder.csproj" ReferenceOutputAssembly="false" />
+      <ProjectReference Include="..\CalculatorHost\CalculatorHost.csproj" ReferenceOutputAssembly="false" />
     </ItemGroup>
 
-    <Target Name="ComposeWasmComponent" BeforeTargets="Build">
+    <Target Name="ComposeWasmComponent" AfterTargets="Build">
         <PropertyGroup>
             <EntrypointComponent>../CalculatorHost/bin/$(Configuration)/$(TargetFramework)/wasi-wasm/native/CalculatorHost.component.wasm</EntrypointComponent>
             <DependencyComponent>../Adder/bin/$(Configuration)/$(TargetFramework)/wasi-wasm/native/Adder.component.wasm</DependencyComponent>
