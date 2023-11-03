@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- THIS IS NOT REALLY A .NET PROJECT -->
+	<!-- It's just a csproj that can be used to invoke the wasm tooling to compose the runnable component -->
+	<!-- and express a dependency on the two implementation components. -->
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Adder\Adder.csproj" />
+	  <ProjectReference Include="..\CalculatorHost\CalculatorHost.csproj" />
+	</ItemGroup>
+
+</Project>

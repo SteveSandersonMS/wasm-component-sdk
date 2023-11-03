@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adder", "samples\calculator
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculatorHost", "samples\calculator\CalculatorHost\CalculatorHost.csproj", "{09E495AF-959E-4B3C-90FC-7E6CD5869F27}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorComposed", "samples\calculator\CalculatorComposed\CalculatorComposed.csproj", "{D6691373-08CB-466F-A230-A038BD82D6CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{09E495AF-959E-4B3C-90FC-7E6CD5869F27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09E495AF-959E-4B3C-90FC-7E6CD5869F27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09E495AF-959E-4B3C-90FC-7E6CD5869F27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6691373-08CB-466F-A230-A038BD82D6CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6691373-08CB-466F-A230-A038BD82D6CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6691373-08CB-466F-A230-A038BD82D6CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6691373-08CB-466F-A230-A038BD82D6CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +55,7 @@ Global
 		{8A0A8F87-CEEB-447E-A694-36BEA1659CA5} = {AA757883-5539-467E-97EA-6FE67D09A697}
 		{5A906283-BA3B-4335-A5FA-0DFDEB771D84} = {8A0A8F87-CEEB-447E-A694-36BEA1659CA5}
 		{09E495AF-959E-4B3C-90FC-7E6CD5869F27} = {8A0A8F87-CEEB-447E-A694-36BEA1659CA5}
+		{D6691373-08CB-466F-A230-A038BD82D6CD} = {8A0A8F87-CEEB-447E-A694-36BEA1659CA5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F033B40-BF0A-4D81-B1D6-84080B73D385}
