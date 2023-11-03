@@ -7,6 +7,7 @@
 
         <PrebuiltWasmToolsVersion>1.0.50</PrebuiltWasmToolsVersion>
         <PrebuiltWasmToolsBaseUrl>https://github.com/bytecodealliance/wasm-tools/releases/download/wasm-tools-$(PrebuiltWasmToolsVersion)/wasm-tools-$(PrebuiltWasmToolsVersion)</PrebuiltWasmToolsBaseUrl>
+        <WasmtimeVersionForWasiSnapshotPreview1Adapters>14.0.4</WasmtimeVersionForWasiSnapshotPreview1Adapters>
     </PropertyGroup>
 
     <ItemGroup>
@@ -36,6 +37,11 @@
     </Target>
 
     <Target Name="DownloadNativeToolingCore" Inputs="@(PrebuiltWasmToolsOutputs)" Outputs="@(PrebuiltWasmToolsOutputs)">
+        <DownloadFile SourceUrl="https://github.com/bytecodealliance/wasmtime/releases/download/v$(WasmtimeVersionForWasiSnapshotPreview1Adapters)/wasi_snapshot_preview1.command.wasm"
+                      DestinationFolder="tools\wasi-wasm" />
+        <DownloadFile SourceUrl="https://github.com/bytecodealliance/wasmtime/releases/download/v$(WasmtimeVersionForWasiSnapshotPreview1Adapters)/wasi_snapshot_preview1.reactor.wasm"
+                      DestinationFolder="tools\wasi-wasm" />
+        
         <DownloadFile SourceUrl="$(PrebuiltWasmToolsBaseUrl)-%(PrebuiltWasmToolsTarget.Identity)%(PrebuiltWasmToolsTarget.Ext)" DestinationFolder="tools\temp" DestinationFileName="%(PrebuiltWasmToolsTarget.Rid)%(PrebuiltWasmToolsTarget.Ext)" />
         <MakeDir Directories="tools\%(PrebuiltWasmToolsTarget.Rid)" />
         <Exec Command="tar -xf &quot;temp/%(PrebuiltWasmToolsTarget.Rid)%(PrebuiltWasmToolsTarget.Ext)&quot; -C %(PrebuiltWasmToolsTarget.Rid) --strip-components=1" WorkingDirectory="tools" />

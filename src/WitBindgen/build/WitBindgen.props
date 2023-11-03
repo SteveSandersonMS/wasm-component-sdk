@@ -1,7 +1,7 @@
 ﻿<Project>
     <PropertyGroup>
         <WitBindgenToolTarget Condition="$([MSBuild]::IsOSPlatform('Windows'))">win</WitBindgenToolTarget>
-        <WitBindgenToolTarget Condition="$([MSBuild]::IsOSPlatform('Linux'))">linux	</WitBindgenToolTarget>
+        <WitBindgenToolTarget Condition="$([MSBuild]::IsOSPlatform('Linux'))">linux</WitBindgenToolTarget>
         <WitBindgenToolTarget Condition="$([MSBuild]::IsOSPlatform('OSX'))">osx</WitBindgenToolTarget>
         <WitBindgenToolTarget>$(WitBindgenToolTarget)-$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture.ToString().ToLower())</WitBindgenToolTarget>
         <WitBindgenExe>$(MSBuildThisFileDirectory)..\tools\$(WitBindgenToolTarget)\wit-bindgen</WitBindgenExe>
