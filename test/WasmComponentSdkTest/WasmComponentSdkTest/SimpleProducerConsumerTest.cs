@@ -14,7 +14,6 @@ public class SimpleProducerConsumerTest
     public void CanBuildComponentWithImport()
     {
         var witInfo = GetWitInfo(FindModulePath("../testapps/SimpleConsumer", "SimpleConsumer.component.wasm"));
-
         Assert.Contains("import test:producer-consumer/operations", witInfo);
     }
 
@@ -62,6 +61,7 @@ public class SimpleProducerConsumerTest
             Path.GetDirectoryName(typeof(SimpleProducerConsumerTest).Assembly.Location)!,
             "../../..",
             searchDir);
+
         if (!Directory.Exists(resolvedSearchDir))
         {
             throw new InvalidOperationException($"No such directory: {Path.GetFullPath(resolvedSearchDir)}");
