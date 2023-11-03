@@ -28,3 +28,11 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Pack
+      run: dotnet pack -c Release /p:VersionSuffix=${{ env.PACKAGE_VERSION_SUFFIX }}
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: nuget-packages
+        path: artifacts/*.nupkg
+        if-no-files-found: error
