@@ -24,7 +24,7 @@ public class CompositionTest
 
     private static string ExecuteCommandComponent(string componentFilePath)
     {
-        var startInfo = new ProcessStartInfo(WasmtimeExePath, $"--wasm-features component-model {componentFilePath}") { RedirectStandardOutput = true };
+        var startInfo = new ProcessStartInfo(WasmtimeExePath, $"-W component-model {componentFilePath}") { RedirectStandardOutput = true };
         var stdout = Process.Start(startInfo)!.StandardOutput.ReadToEnd();
         return stdout;
     }
