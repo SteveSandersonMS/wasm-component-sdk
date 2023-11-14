@@ -1,13 +1,13 @@
-package test:producer-consumer
+package test:producer-consumer;
 
 interface operations {
-	add: func(left: s32, right: s32) -> s32
+	add: func(left: s32, right: s32) -> s32;
 }
 
 world producer {
-  export operations
+  export operations;
 }
 
 world consumer {
-  import operations
+  import operations;
 }

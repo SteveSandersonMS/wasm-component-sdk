@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="build\WasmComponent.Sdk.props" />
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -6,9 +7,14 @@
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
 
-        <PrebuiltWasmToolsVersion>1.0.40</PrebuiltWasmToolsVersion>
+        <!-- Things you might want to edit -->
+        <!-- Set BuildWasmToolsLocally to true if you want to build modules/wasm-tools locally and use its output -->
+        <BuildWasmToolsLocally>true</BuildWasmToolsLocally>
+        <PrebuiltWasmToolsVersion>1.0.51</PrebuiltWasmToolsVersion>
         <PrebuiltWasmToolsBaseUrl>https://github.com/bytecodealliance/wasm-tools/releases/download/wasm-tools-$(PrebuiltWasmToolsVersion)/wasm-tools-$(PrebuiltWasmToolsVersion)</PrebuiltWasmToolsBaseUrl>
-        <WasmtimeVersionForWasiSnapshotPreview1Adapters>13.0.0</WasmtimeVersionForWasiSnapshotPreview1Adapters>
+        <WasmtimeVersionForWasiSnapshotPreview1Adapters>14.0.4</WasmtimeVersionForWasiSnapshotPreview1Adapters>
+
+        <WasmToolsModuleRoot>$(MSBuildThisFileDirectory)..\..\modules\wasm-tools\</WasmToolsModuleRoot>
 
         <!-- Don't pack any assemblies in lib/*/.dll.-->
         <NoPackageAnalysis>true</NoPackageAnalysis>
@@ -25,7 +31,21 @@
         <None Include="ImportInDev.proj" />
     </ItemGroup>
 
-    <Target Name="DownloadNativeTooling" BeforeTargets="Build" DependsOnTargets="GetDownloadNativeToolingDependencies; DownloadNativeToolingCore">
+    <Target Name="BuildOrDownloadNativeTooling" BeforeTargets="Build" DependsOnTargets="BuildNativeTooling; DownloadNativeTooling; DownloadWasiPreview1Adapters">
+    </Target>
+
+    <Target Name="BuildNativeTooling" Condition="'$(BuildWasmToolsLocally)' == 'true'">
+        <Exec Command="cargo build --release" WorkingDirectory="$(WasmToolsModuleRoot)" />
+
+        <PropertyGroup>
+            <WasmToolsExeName>wasm-tools</WasmToolsExeName>
+            <WasmToolsExeName Condition="$([MSBuild]::IsOSPlatform('Windows'))">$(WasmToolsExeName).exe</WasmToolsExeName>
+        </PropertyGroup>
+
+        <Copy SourceFiles="$(WasmToolsModuleRoot)target\release\$(WasmToolsExeName)" DestinationFolder="tools\$(WasmToolsTarget)\" />
+    </Target>
+
+    <Target Name="DownloadNativeTooling" Condition="'$(BuildWasmToolsLocally)' != 'true'" DependsOnTargets="GetDownloadNativeToolingDependencies; DownloadNativeToolingCore">
     </Target>
 
     <Target Name="GetDownloadNativeToolingDependencies">
@@ -42,15 +62,19 @@
     </Target>
 
     <Target Name="DownloadNativeToolingCore" Inputs="@(PrebuiltWasmToolsOutputs)" Outputs="@(PrebuiltWasmToolsOutputs)">
-        <DownloadFile SourceUrl="https://github.com/bytecodealliance/wasmtime/releases/download/v$(WasmtimeVersionForWasiSnapshotPreview1Adapters)/wasi_snapshot_preview1.command.wasm"
-                      DestinationFolder="tools\wasi-wasm" />
-        <DownloadFile SourceUrl="https://github.com/bytecodealliance/wasmtime/releases/download/v$(WasmtimeVersionForWasiSnapshotPreview1Adapters)/wasi_snapshot_preview1.reactor.wasm"
-                      DestinationFolder="tools\wasi-wasm" />
-        
         <DownloadFile SourceUrl="$(PrebuiltWasmToolsBaseUrl)-%(PrebuiltWasmToolsTarget.Identity)%(PrebuiltWasmToolsTarget.Ext)" DestinationFolder="tools\temp" DestinationFileName="%(PrebuiltWasmToolsTarget.Rid)%(PrebuiltWasmToolsTarget.Ext)" />
         <MakeDir Directories="tools\%(PrebuiltWasmToolsTarget.Rid)" />
         <Exec Command="tar -xf &quot;temp/%(PrebuiltWasmToolsTarget.Rid)%(PrebuiltWasmToolsTarget.Ext)&quot; -C %(PrebuiltWasmToolsTarget.Rid) --strip-components=1" WorkingDirectory="tools" />
         <RemoveDir Directories="tools\temp" />
+    </Target>
+
+    <Target Name="DownloadWasiPreview1Adapters" Condition="!Exists('tools\wasi-wasm\lastbuild.txt')">
+        <DownloadFile SourceUrl="https://github.com/bytecodealliance/wasmtime/releases/download/v$(WasmtimeVersionForWasiSnapshotPreview1Adapters)/wasi_snapshot_preview1.command.wasm" DestinationFolder="tools\wasi-wasm" />
+        <DownloadFile SourceUrl="https://github.com/bytecodealliance/wasmtime/releases/download/v$(WasmtimeVersionForWasiSnapshotPreview1Adapters)/wasi_snapshot_preview1.reactor.wasm" DestinationFolder="tools\wasi-wasm" />
+        <WriteLinesToFile File="tools\wasi-wasm\lastbuild.txt" Lines="" Overwrite="true" />
+        <ItemGroup>
+            <FileWrites Include="tools\wasi-wasm\lastbuild.txt" />
+        </ItemGroup>
     </Target>
 
     <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">

@@ -1,6 +1,6 @@
-package test:simple
+package test:simple;
 
 world my-funcs {
-  import do-something: func()
-  export get-number: func() -> s32
+  import do-something: func();
+  export get-number: func() -> s32;
 }

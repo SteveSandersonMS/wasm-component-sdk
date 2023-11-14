@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <WasmtimeVersion>13.0.0</WasmtimeVersion>
+        <WasmtimeVersion>14.0.4</WasmtimeVersion>
 
         <WasmtimeTarget Condition="$([MSBuild]::IsOSPlatform('Windows'))">mingw</WasmtimeTarget>
         <WasmtimeTarget Condition="$([MSBuild]::IsOSPlatform('Linux'))">linux</WasmtimeTarget>
