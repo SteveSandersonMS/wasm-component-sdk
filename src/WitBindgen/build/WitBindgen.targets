@@ -34,6 +34,8 @@
         
         <ItemGroup>
             <WitGeneratedCsFiles Include="$(WitGeneratedFilesRoot)**\*.cs" />
+			<FileWrites Include="$(WitGeneratedFilesRoot)lastbuild.txt" />
+			<FileWrites Include="$(WitGeneratedFilesRoot)**" />
         </ItemGroup>
     </Target>
 </Project>

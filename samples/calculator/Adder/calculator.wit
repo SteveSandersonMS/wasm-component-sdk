@@ -1,13 +1,13 @@
-package example:calculator
+package example:calculator;
 
 interface operations {
-	add: func(left: s32, right: s32) -> s32
+	add: func(left: s32, right: s32) -> s32;
 }
 
 world computer {
-  export operations
+  export operations;
 }
 
 world hostapp {
-  import operations
+  import operations;
 }
