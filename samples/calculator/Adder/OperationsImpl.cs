@@ -6,4 +6,9 @@ public class OperationsImpl : Operations
     {
         return left + right;
     }
+
+    public static string ToUpper(string input)
+    {
+        return input.ToUpperInvariant();
+    }
 }
