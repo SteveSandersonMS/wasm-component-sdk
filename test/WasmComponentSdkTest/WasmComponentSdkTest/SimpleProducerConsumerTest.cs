@@ -10,17 +10,23 @@ public class SimpleProducerConsumerTest
     // (there's literally no mention of the entire concept within the wasmtime-dotnet repo), so for
     // now the tests work by invoking the wasmtime CLI
 
+#if DEBUG
+    const string Config = "Debug";
+#else
+    const string Config = "Release";
+#endif
+
     [Fact]
     public void CanBuildComponentWithImport()
     {
-        var witInfo = GetWitInfo(FindModulePath("../testapps/SimpleConsumer", "SimpleConsumer.component.wasm"));
+        var witInfo = GetWitInfo(FindModulePath($"../testapps/SimpleConsumer/bin/{Config}", "SimpleConsumer.component.wasm"));
         Assert.Contains("import test:producer-consumer/operations", witInfo);
     }
 
     [Fact]
     public void CanBuildComponentWithExport()
     {
-        var witInfo = GetWitInfo(FindModulePath("../testapps/SimpleProducer", "SimpleProducer.component.wasm"));
+        var witInfo = GetWitInfo(FindModulePath($"../testapps/SimpleProducer/bin/{Config}", "SimpleProducer.component.wasm"));
         Assert.Contains("export test:producer-consumer/operations", witInfo);
     }
 
