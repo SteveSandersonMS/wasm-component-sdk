@@ -12,8 +12,7 @@ crate-type = [ "cdylib" ]
 anyhow = "1"
 http = "0.2"
 spin-sdk = { git = "https://github.com/fermyon/spin", tag = "v2.0.1" }
-wit-bindgen = { git = "https://github.com/bytecodealliance/wit-bindgen", version = "0.15.0" }
-cargo-component-bindings = { git = "https://github.com/bytecodealliance/cargo-component" }
+wit-bindgen = "0.13.1"
 
 [workspace]
 

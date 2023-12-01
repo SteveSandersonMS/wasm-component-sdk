@@ -1,4 +1,3 @@
-cargo component build
 cargo build --target wasm32-wasi --release
 ..\..\..\src\WasmComponent.Sdk\tools\win-x64\wasm-tools component new target/wasm32-wasi/release/my_rust_app.wasm --adapt ..\..\..\src\WasmComponent.Sdk\tools\wasi-wasm\wasi_snapshot_preview1.reactor.wasm -o target/wasm32-wasi/release/my_rust_app.component.wasm
 
