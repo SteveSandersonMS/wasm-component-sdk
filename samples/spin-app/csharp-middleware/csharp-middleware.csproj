@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+        <RootNamespace>csharp-middleware</RootNamespace>
+
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <RuntimeIdentifier>wasi-wasm</RuntimeIdentifier>
+        <PublishTrimmed>true</PublishTrimmed>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="WasmComponent.Sdk" Version="$(PackageVersion)" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Wit Include="../middleware.wit" World="computer" />
+    </ItemGroup>
+
+</Project>
