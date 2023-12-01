@@ -2,12 +2,16 @@
     <!-- Only needed when referencing the dependencies as projects. For package references, these are imported automatically. -->
     <Import Project="..\..\..\src\WasmComponent.Sdk\ImportInDev.proj" />
 
+    <Import Project="..\..\..\test\WasmtimeCliFetcher\FetchWasmtime.targets" />
+
     <!-- THIS IS NOT REALLY A .NET PROJECT -->
     <!-- It's just a csproj that can be used to invoke the wasm tooling to compose the runnable component -->
     <!-- and express a dependency on the two implementation components. -->
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
+        <RunCommand>$(WasmtimeExe)</RunCommand>
+        <RunArguments>--wasm component-model dist/calculator.wasm</RunArguments>
     </PropertyGroup>
 
     <ItemGroup>
