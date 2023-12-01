@@ -1,0 +1,18 @@
+spin_manifest_version = 2
+
+[application]
+name = "my-rust-app"
+version = "0.1.0"
+authors = ["Steve Sanderson <SteveSandersonMS@users.noreply.github.com>"]
+description = ""
+
+[[trigger.http]]
+route = "/..."
+component = "my-rust-app"
+
+[component.my-rust-app]
+source = "target/wasm32-wasi/release/my_rust_app.composed.wasm"
+allowed_outbound_hosts = []
+
+[component.my-rust-app.build]
+command = "build.cmd"

@@ -1,0 +1,4 @@
+c-middleware/dist/
+c-middleware/generated/
+rust-host/.spin/
+rust-host/target/
