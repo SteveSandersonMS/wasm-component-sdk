@@ -26,7 +26,7 @@ If you don't already have it, install [.NET 8 SDK](https://dotnet.microsoft.com/
 
 Also install an up-to-date Python 3.x. For example on Windows, [install Python from the Microsoft Store](https://www.microsoft.com/store/productId/9NCVDN91XZQP), and make sure it's available on your `PATH` (for example: check `python --version` prints a version). This is only required temporarily (a bug in Clang for WASI SDK means we require Emscripten, which in turn requires Python).
 
-### 2. Create a project and add WaskComponent.Sdk package
+### 2. Create a project and add WasmComponent.Sdk package
 
 * `dotnet new console -o MyApp`
 * `cd MyApp`
