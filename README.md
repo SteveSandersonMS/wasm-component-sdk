@@ -77,7 +77,7 @@ For example, add a file called `calculator.wit` into your project, containing:
 package example:calculator;
 
 interface operations {
-    add: func(left: s32, right: s32) -> s32;
+  add: func(left: s32, right: s32) -> s32;
 }
 
 world computer {
