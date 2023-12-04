@@ -14,7 +14,7 @@ With this package, you can add one NuGet reference and then get on with your exp
 
 ## Support
 
-**No support!** This is for experimentation. All the underlying technologies are under heavy development and are missing key features. When you encounter an issue, which you absolutely will, please try to file it on the relevant underlying tool (see below). Only file issues on this repo if you're sure the problem is here in this repo.
+**No support!** This is for experimentation. All the underlying technologies are under heavy development and are missing key features. When you encounter an issue, which you absolutely will, please try to file it on the relevant underlying tool (see credits below). Only file issues on this repo if you're sure the problem is here in this repo.
 
 ## Getting started
 
@@ -77,7 +77,7 @@ For example, add a file called `calculator.wit` into your project, containing:
 package example:calculator;
 
 interface operations {
-	add: func(left: s32, right: s32) -> s32;
+    add: func(left: s32, right: s32) -> s32;
 }
 
 world computer {
