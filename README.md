@@ -107,6 +107,12 @@ Another option, if you use Visual Studio, is to select the WIT file in *Solution
 
 You can simply type the world name `hostapp` into the properties pane.
 
+For now, you must also specify the functions you want to import in the `.csproj` file.  Add this to the `ItemGroup`:
+
+```xml
+    <WasmImport Include="example:calculator/operations!add" />
+```
+
 Now you can call the imported `Add` function by putting the following in `Program.cs`:
 
 ```cs
@@ -174,6 +180,18 @@ world root {
 ```
 
 This component can be used anywhere that WASI preview 2 components can be used. For example, use `wasm-tools compose` as illustrated above.
+
+### WIT strings and memory
+
+The calculator example above works easily because it doesn't need to allocate memory dynamically. Once you start working with strings, you must add an extra line to the `<PropertyGroup>` in your _host_ `.csproj` file (that is, the application that's _importing_ the interface):
+
+```xml
+    <IlcExportUnmanagedEntrypoints>true</IlcExportUnmanagedEntrypoints>
+```
+
+(You don't need to add this to your class library/exporting `.csproj`.)
+
+If you get a build error along the lines of _failed to encode a component from module ... module does not export a function named `cabi_realloc`_ then check you have remembered to add this line.
 
 ## Credits
 
