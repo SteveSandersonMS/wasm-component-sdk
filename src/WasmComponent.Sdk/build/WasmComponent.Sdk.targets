@@ -6,13 +6,13 @@
 
     <PropertyGroup>
         <!-- Keep this block all in sync manually, since URLs can be arbitrary -->
-        <WasiSdkVersion>20.0</WasiSdkVersion>
-        <WasiSdkUrl Condition="$([MSBuild]::IsOSPlatform('Windows'))">https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-20/wasi-sdk-20.0.m-mingw.tar.gz</WasiSdkUrl>
-        <WasiSdkUrl Condition="$([MSBuild]::IsOSPlatform('Linux'))">https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-20/wasi-sdk-20.0-linux.tar.gz</WasiSdkUrl>
-        <WasiSdkUrl Condition="$([MSBuild]::IsOSPlatform('OSX'))">https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-20/wasi-sdk-20.0-macos.tar.gz</WasiSdkUrl>
+        <WasiSdkVersion>21.0</WasiSdkVersion>
+        <WasiSdkUrl Condition="$([MSBuild]::IsOSPlatform('Windows'))">https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-21/wasi-sdk-21.0.m-mingw.tar.gz</WasiSdkUrl>
+        <WasiSdkUrl Condition="$([MSBuild]::IsOSPlatform('Linux'))">https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-21/wasi-sdk-21.0-linux.tar.gz</WasiSdkUrl>
+        <WasiSdkUrl Condition="$([MSBuild]::IsOSPlatform('OSX'))">https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-21/wasi-sdk-21.0-macos.tar.gz</WasiSdkUrl>
         <WasiSdkRoot>$([System.IO.Path]::Combine("$([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))", ".wasi-sdk", "wasi-sdk-$(WasiSdkVersion)"))</WasiSdkRoot>
 
-        <EmSdkVersion>3.1.23</EmSdkVersion>
+        <EmSdkVersion>3.1.55</EmSdkVersion>
         <EmSdkUrl>https://github.com/emscripten-core/emsdk/archive/refs/tags/$(EmSdkVersion).zip</EmSdkUrl>
         <EmscriptenRoot>$([System.IO.Path]::Combine("$([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))", ".emsdk", "emsdk-$(EmSdkVersion)"))</EmscriptenRoot>
     </PropertyGroup>
@@ -31,13 +31,14 @@
             <WasiPreview1AdapterType>reactor</WasiPreview1AdapterType>
             <WasiPreview1AdapterType Condition="'$(OutputType.ToLower())' == 'exe'">command</WasiPreview1AdapterType>
             <WasiPreview1AdapterPath>$(MSBuildThisFileDirectory)../tools/wasi-wasm/wasi_snapshot_preview1.$(WasiPreview1AdapterType).wasm</WasiPreview1AdapterPath>
-            <NativeComponentBinary>$(NativeOutputPath)$(TargetName).component.wasm</NativeComponentBinary>
+            <!-- NativeComponentBinary should have a filename in kebab-case -->  
+            <NativeComponentBinary>$(NativeOutputPath)$(TargetName.ToLower().Replace(" ", "-"))-component.wasm</NativeComponentBinary>
         </PropertyGroup>
     </Target>
 
     <Target Name="PrepareWasmSdks" BeforeTargets="CheckWasmSdks" DependsOnTargets="ObtainWasiSdk; ObtainEmscripten">
         <PropertyGroup>
-            <EmSdk>$(EmscriptenRoot)</EmSdk>
+            <EmSdk Condition="'$(EmSdk)' == ''">$(EmscriptenRoot)</EmSdk>
             <WASI_SDK_PATH>$(WasiSdkRoot)</WASI_SDK_PATH>
         </PropertyGroup>
     </Target>

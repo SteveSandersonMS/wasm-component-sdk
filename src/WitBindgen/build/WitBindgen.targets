@@ -1,10 +1,17 @@
 ﻿<Project>
     <Target Name="WitCompile_BeforeCsCompile" BeforeTargets="BeforeCompile"
 			Condition="'$(Language)' == 'C#' AND '@(Wit)' != ''"
-            DependsOnTargets="WitCompile_GetDependencies; WitCompile_InvokeTool">
+            DependsOnTargets="WitCompile_GetDependencies; CompileCabiRealloc; WitCompile_InvokeTool">
         <ItemGroup>
             <Compile Include="$(WitGeneratedFilesRoot)**\*.cs" />
             <NativeObjects Include="$(WitGeneratedFilesRoot)**\*.o" />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="CompileCabiRealloc" BeforeTargets="IlcCompile" DependsOnTargets="WitCompile_InvokeTool" Inputs="$(WitGeneratedCabiReallocSourceFile)" Outputs="$(WitGeneratedFilesRoot)cabi_realloc.o" Condition="Exists($(WitGeneratedCabiReallocSourceFile))">
+        <Exec Command="emcc.bat &quot;$(WitGeneratedCabiReallocSourceFile)&quot; -c -o &quot;$(WitGeneratedFilesRoot)cabi_realloc.o&quot;"/>
+        <ItemGroup>
+            <NativeObjects Include="$(WitGeneratedFilesRoot)cabi_realloc.o" />
         </ItemGroup>
     </Target>
 
@@ -17,7 +24,7 @@
         </ItemGroup>
     </Target>
 
-    <Target Name="WitCompile_InvokeTool" Inputs="@(Wit);$(MSBuildProjectFile)" Outputs="@(WitGeneratedCsFiles);$(WitGeneratedFilesRoot)lastbuild.txt">
+    <Target Name="WitCompile_InvokeTool" Inputs="@(Wit);$(MSBuildProjectFile)" Outputs="@(WitGeneratedCsFiles);$(WitGeneratedCabiReallocSourceFiles);@(NativeObjects);$(WitGeneratedFilesRoot)lastbuild.txt">
         <ItemGroup>
             <WitGeneratedCsFiles Remove="@(WitGeneratedCsFiles)" />
             <Wit Update="@(Wit)">
@@ -29,9 +36,18 @@
         
         <RemoveDir Directories="$(WitGeneratedFilesRoot)" />
         <MakeDir Directories="$(WitGeneratedFilesRoot)" />
-        <Exec Command="$(WitBindgenExe) c-sharp %(Wit.Identity) %(Wit.WitWorldArg) --out-dir $(WitGeneratedFilesRoot)" />
+        <Exec Command="$(WitBindgenExe) c-sharp --runtime native-aot %(Wit.Identity) %(Wit.WitWorldArg) --out-dir $(WitGeneratedFilesRoot)" />
         <WriteLinesToFile File="$(WitGeneratedFilesRoot)lastbuild.txt" Lines="" Overwrite="true" />
-        
+
+
+        <ItemGroup>
+            <WitGeneratedCabiReallocSourceFiles Include="$(WitGeneratedFilesRoot)**\*_cabi_realloc.c"/>
+        </ItemGroup>
+        <PropertyGroup>
+            <!-- Even when there are multiple worlds included in a single library, only a single cabi_realloc method should be included -->
+            <WitGeneratedCabiReallocSourceFile>%(WitGeneratedCabiReallocSourceFiles.Identity)</WitGeneratedCabiReallocSourceFile>
+        </PropertyGroup>
+
         <ItemGroup>
             <WitGeneratedCsFiles Include="$(WitGeneratedFilesRoot)**\*.cs" />
 			<FileWrites Include="$(WitGeneratedFilesRoot)lastbuild.txt" />
