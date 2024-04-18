@@ -38,7 +38,7 @@
 
     <Target Name="PrepareWasmSdks" BeforeTargets="CheckWasmSdks" DependsOnTargets="ObtainWasiSdk; ObtainEmscripten">
         <PropertyGroup>
-            <EmSdk Condition="'$(EmSdk)' == ''">$(EmscriptenRoot)</EmSdk>
+            <EmSdk>$(EmscriptenRoot)</EmSdk>
             <WASI_SDK_PATH>$(WasiSdkRoot)</WASI_SDK_PATH>
         </PropertyGroup>
     </Target>
