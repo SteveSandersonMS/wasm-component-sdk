@@ -21,7 +21,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 8.0.100-rtm.23516.5
+        dotnet-version: 9.0.100-alpha.1.23563.6
     - name: Restore dependencies
       run: dotnet restore
     - name: Prepare WASM SDKs

@@ -12,7 +12,7 @@
         <WasiSdkUrl Condition="$([MSBuild]::IsOSPlatform('OSX'))">https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-20/wasi-sdk-20.0-macos.tar.gz</WasiSdkUrl>
         <WasiSdkRoot>$([System.IO.Path]::Combine("$([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))", ".wasi-sdk", "wasi-sdk-$(WasiSdkVersion)"))</WasiSdkRoot>
 
-        <EmSdkVersion>3.1.23</EmSdkVersion>
+        <EmSdkVersion>3.1.48</EmSdkVersion>
         <EmSdkUrl>https://github.com/emscripten-core/emsdk/archive/refs/tags/$(EmSdkVersion).zip</EmSdkUrl>
         <EmscriptenRoot>$([System.IO.Path]::Combine("$([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))", ".emsdk", "emsdk-$(EmSdkVersion)"))</EmscriptenRoot>
     </PropertyGroup>
